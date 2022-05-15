@@ -17,7 +17,7 @@ int main () {
     novoandar = andar;
 
     //i vai de 0 ate o andar digitado, em ordem crescente.
-    for(i=0;i<novoandar;i++) {
+    for(i=0;i<=novoandar;i++) {
         
         //Conversao de casas.
         un = i % 10;
