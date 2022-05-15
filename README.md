@@ -14,18 +14,17 @@ sequência de dígitos “13”. Assim, eles não usam o andar 4, nem o andar 13
 Como o elevador espacial tem muitos andares, e eles precisam numerar todos os andares do elevador, os
 chineses pediram que você escrevesse um programa que, dado o andar, indica o número que deve ser
 atribuído a ele.
+Entrada
+  Cada caso de teste consiste de uma única linha, contendo um inteiro N (1 ≤ N ≤ 106) que indica o andar
+  cujo número deve ser determinado.
 
-## Entrada
-Cada caso de teste consiste de uma única linha, contendo um inteiro N (1 ≤ N ≤ 106) que indica o andar
-cujo número deve ser determinado.
-
-## Saída
-Para cada caso de teste, imprima uma linha contendo um único número inteiro indicando o número
-atribuído ao N-ésimo andar.
+Saída
+  Para cada caso de teste, imprima uma linha contendo um único número inteiro indicando o número
+  atribuído ao N-ésimo andar.
 
 ##
 
-## Folha de Pagamentos
+Folha de Pagamentos
 
 Este governo, como todos os anos, está muito preocupado com a folha de pagamentos. Neste ano, porém, a
 maneira que os pagamentos serão efetuados será trocada. Ao invés de pagar os funcionários como de
@@ -33,18 +32,18 @@ costume, a formula utilizada para calcular os salários será mais simples: A so
 de matrícula do funcionário.
 Para evitar fraudes, ajude o governo a fazer este cálculo!
 
-## Entrada
-A entrada começa com uma linha com um número 1 <= N <= 104 que é o número de funcionários. Cada
-uma das N linhas seguintes representa um funcionário através de seu numero de matrícula
-1 <= M <= 3 x 104.
+Entrada
+  A entrada começa com uma linha com um número 1 <= N <= 104 que é o número de funcionários. Cada
+  uma das N linhas seguintes representa um funcionário através de seu numero de matrícula
+  1 <= M <= 3 x 104.
 
-## Saída
-A saída consiste de N linhas, cada uma contendo o salário do funcionário na ordem que foram incluídos na
-entrada.
+Saída
+  A saída consiste de N linhas, cada uma contendo o salário do funcionário na ordem que foram incluídos na
+  entrada.
 
 ##
 
-## Azulejos
+Azulejos
 
 Rafael resolveu trocar os azulejos de sua sala de estar, e para isto fez as medições e comprou N azulejos
 brancos na loja.
@@ -56,18 +55,18 @@ Para escolher quais azulejos pintar, pensou na seguinte lógica: Escolheu dois i
 pintar todos os azulejos cuja enumeração fosse múltipla de A e/ou B.
 Ajude Rafael a descobrir quantos azulejos serão pintados no total.
 
-## Entrada
-Haverá diversos casos de teste. Cada caso de teste contém três inteiros, N, A e B
-(3 ≤ N ≤ 10000, 2 ≤ A, B ≤ N).
-O último caso de teste é indicado quando N = A = B = 0, o qual não deverá ser processado.
+Entrada
+  Haverá diversos casos de teste. Cada caso de teste contém três inteiros, N, A e B
+  (3 ≤ N ≤ 10000, 2 ≤ A, B ≤ N).
+  O último caso de teste é indicado quando N = A = B = 0, o qual não deverá ser processado.
 
-## Saída
-Para cada caso de teste, imprima uma linha contendo um inteiro, mostrando quantos azulejos serão
-pintados no final do processo.
+Saída
+  Para cada caso de teste, imprima uma linha contendo um inteiro, mostrando quantos azulejos serão
+  pintados no final do processo.
 
 ##
 
-## Máquina de Café
+Máquina de Café
 
 O novo prédio da Sociedade Brasileira de Computação (SBC) possui 3 andares. Em determinadas épocas
 do ano, os funcionários da SBC bebem muito café. Por conta disso, a presidência da SBC decidiu
@@ -81,11 +80,11 @@ a minimizar o tempo total gasto subindo e descendo escadas.
 Sua tarefa é ajudar a diretoria a posicionar a máquina de forma a minimizar o tempo total gasto pelos
 funcionários subindo e descendo escadas.
 
-## Entrada
-A entrada consiste em 3 números, A1 , A2 , A3 (≤ 0 Ai ≤ 1000), onde Ai representa o número de pessoas
-que trabalham no i-ésimo andar.
+Entrada
+  A entrada consiste em 3 números, A1 , A2 , A3 (≤ 0 Ai ≤ 1000), onde Ai representa o número de pessoas
+  que trabalham no i-ésimo andar.
 
-## Saída
-Seu programa deve imprimir na primeira linha, o número total de minutos a serem gastos com o melhor
-posicionamento possível da máquina, e na segunda linha, o(s) andar(es) de melhor posicionamento para a
-máquina.
+Saída
+  Seu programa deve imprimir na primeira linha, o número total de minutos a serem gastos com o melhor
+  posicionamento possível da máquina, e na segunda linha, o(s) andar(es) de melhor posicionamento para a
+  máquina.
