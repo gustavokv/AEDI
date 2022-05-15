@@ -14,6 +14,7 @@ sequência de dígitos “13”. Assim, eles não usam o andar 4, nem o andar 13
 Como o elevador espacial tem muitos andares, e eles precisam numerar todos os andares do elevador, os
 chineses pediram que você escrevesse um programa que, dado o andar, indica o número que deve ser
 atribuído a ele.
+
 Entrada
   Cada caso de teste consiste de uma única linha, contendo um inteiro N (1 ≤ N ≤ 106) que indica o andar
   cujo número deve ser determinado.
