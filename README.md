@@ -2,7 +2,9 @@
 
 Códigos referentes ao Trabalho 1 de Algoritmo e Estrutura de Dados.
 
-## Elevador Espacial
+##
+
+Elevador Espacial
 
 A China está construindo um elevador espacial, que permitirá o lançamento de sondas e satélites a um
 custo muito mais baixo, viabilizando não só projetos de pesquisa científica como o turismo espacial.
@@ -15,11 +17,11 @@ Como o elevador espacial tem muitos andares, e eles precisam numerar todos os an
 chineses pediram que você escrevesse um programa que, dado o andar, indica o número que deve ser
 atribuído a ele.
 
-Entrada
+Entrada:
   Cada caso de teste consiste de uma única linha, contendo um inteiro N (1 ≤ N ≤ 106) que indica o andar
   cujo número deve ser determinado.
 
-Saída
+Saída:
   Para cada caso de teste, imprima uma linha contendo um único número inteiro indicando o número
   atribuído ao N-ésimo andar.
 
@@ -33,12 +35,12 @@ costume, a formula utilizada para calcular os salários será mais simples: A so
 de matrícula do funcionário.
 Para evitar fraudes, ajude o governo a fazer este cálculo!
 
-Entrada
+Entrada:
   A entrada começa com uma linha com um número 1 <= N <= 104 que é o número de funcionários. Cada
   uma das N linhas seguintes representa um funcionário através de seu numero de matrícula
   1 <= M <= 3 x 104.
 
-Saída
+Saída:
   A saída consiste de N linhas, cada uma contendo o salário do funcionário na ordem que foram incluídos na
   entrada.
 
@@ -56,12 +58,12 @@ Para escolher quais azulejos pintar, pensou na seguinte lógica: Escolheu dois i
 pintar todos os azulejos cuja enumeração fosse múltipla de A e/ou B.
 Ajude Rafael a descobrir quantos azulejos serão pintados no total.
 
-Entrada
+Entrada:
   Haverá diversos casos de teste. Cada caso de teste contém três inteiros, N, A e B
   (3 ≤ N ≤ 10000, 2 ≤ A, B ≤ N).
   O último caso de teste é indicado quando N = A = B = 0, o qual não deverá ser processado.
 
-Saída
+Saída:
   Para cada caso de teste, imprima uma linha contendo um inteiro, mostrando quantos azulejos serão
   pintados no final do processo.
 
@@ -81,11 +83,11 @@ a minimizar o tempo total gasto subindo e descendo escadas.
 Sua tarefa é ajudar a diretoria a posicionar a máquina de forma a minimizar o tempo total gasto pelos
 funcionários subindo e descendo escadas.
 
-Entrada
+Entrada:
   A entrada consiste em 3 números, A1 , A2 , A3 (≤ 0 Ai ≤ 1000), onde Ai representa o número de pessoas
   que trabalham no i-ésimo andar.
 
-Saída
+Saída:
   Seu programa deve imprimir na primeira linha, o número total de minutos a serem gastos com o melhor
   posicionamento possível da máquina, e na segunda linha, o(s) andar(es) de melhor posicionamento para a
   máquina.
