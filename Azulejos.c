@@ -7,40 +7,25 @@ int main() {
         //Entrada da quantidade total de azulejos
         printf("Digite o numero de azulejos:\n");
         scanf("%d", &nazulejos);
-        if(nazulejos==0) {
-            nazulejos = 0;
+        while(((nazulejos<3)||(nazulejos>10000))&&(nazulejos!=0)) {
+            printf("Numero de azulejos invalido!\nDigite novamente:\n");
+            scanf("%d", &nazulejos);
         }
-        else {
-            while((nazulejos<3)||(nazulejos>10000)) {
-                printf("Numero de azulejos invalido!\nDigite novamente:\n");
-                scanf("%d", &nazulejos);
-            }
-        }
-
+        
         //Entrada do primeiro inteiro(a)
         printf("Digite o primeiro inteiro:\n");
         scanf("%d", &a);
-        if(a==0) {
-            a = 0;
-        }
-        else {
-            while((a<2)||(a>nazulejos)) {
-                printf("O primeiro inteiro esta incorreto!\nDigite novamente:\n");
-                scanf("%d", &a);
-            }
+        while(((a<2)||(a>nazulejos))&&(nazulejos!=0)) {
+            printf("O primeiro inteiro esta incorreto!\nDigite novamente:\n");
+            scanf("%d", &a);
         }
 
         //Entrada do segundo inteiro(b)
         printf("Digite o segundo inteiro:\n");
         scanf("%d", &b);
-        if(b==0) {
-            b = 0;
-        }
-        else {
-            while(b>nazulejos) {
-                printf("O segundo inteiro esta incorreto!\nDigite novamente:\n");
-                scanf("%d", &b);
-            }
+        while((b>nazulejos)&&(nazulejos!=0)) {
+            printf("O segundo inteiro esta incorreto!\nDigite novamente:\n");
+            scanf("%d", &b);
         }
 
         //Caso todos as entradas sejam 0 o programa se encerra
