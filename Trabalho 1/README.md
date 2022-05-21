@@ -1,4 +1,4 @@
-## Trabalhos-AEDI
+## Trabalho 1 AED I
 
 Códigos referentes ao Trabalho 1 de Algoritmo e Estrutura de Dados.
 
