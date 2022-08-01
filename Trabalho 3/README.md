@@ -1,5 +1,6 @@
-Programe um sistema para controle de um caixa eletrônico usando a linguagem C. As funcionalidades do sistema serão controladas usando o menu de opções a seguir.
+##Programe um sistema para controle de um caixa eletrônico usando a linguagem C. As funcionalidades do sistema serão controladas usando o menu de opções a seguir.
 
+##
 
 MENU PRINCIPAL
 1-Cliente
@@ -19,6 +20,8 @@ MENU RELATÓRIOS
 2-Valor do saldo existente
 3-Quantidade de cédulas existentes
 4-Voltar ao menu principal
+
+##
 
 O sistema deve manter no máximo 50 clientes cadastrados.
 
@@ -41,6 +44,8 @@ deve estar abastecido automaticamente antes do primeiro saque e os valores máxi
 de 20; 1.600 de 10; 3.200 de 5; 6.400 de 2 e 12.800 de 1 real.
 
 Os relatórios serão apresentados pelo sistema através das opções do menu relatório e a seguir o formato de cada relatório.
+
+##
 
 ----------------------------------------------------------------------------------------------------------------------------
 Relatório 'Valores sacados'
@@ -70,6 +75,7 @@ Cedula Z quantidade3 (valor por extenso)
 ...
 --------------------------------------------------------------------------------------------------------------------------
 
+##
 
 Para a construção do sistema utilize o extrato de código do arquivo 'gerador.c' e complemente o código no que for necessário. 
 Construa módulos e para o armazenamento utilize estruturas homogêneas.
