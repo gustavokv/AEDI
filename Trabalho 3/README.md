@@ -1,6 +1,5 @@
 ## Programe um sistema para controle de um caixa eletrônico usando a linguagem C. As funcionalidades do sistema serão controladas usando o menu de opções a seguir.
 
-##
 
 MENU PRINCIPAL
 1-Cliente
