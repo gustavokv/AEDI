@@ -133,6 +133,25 @@ void gera_cpf_valido(char cpf[]) {
    cpf[9] = '\0';
 }
 
+void mostraCliente(char cpf[50][14], char conta[50][9], int qntcliente) {
+   int i=0, j;
+
+   while(qntcliente>i) {
+      printf("\n------------\nCliente %d:\n------------\nConta: ", i + 1);
+       for(j=0;j<9;j++) {
+         printf("%c", conta[i][j]);
+      }
+      printf("\nCPF: ");
+      for(j=0;j<14;j++) {
+         printf("%c", cpf[i][j]);
+      }
+      printf("\n");
+      printf("Quantidade de saques: \nValor total: \n");
+
+      i++;
+   }
+}
+
 int main () {
    int opmenu, opmenucliente, opmenurelat, resp=0, qntrep, contuser=0; //Menu
    int i, j; //Contadores
@@ -258,25 +277,13 @@ int main () {
                   
                   case 2:
                      if(contuser!=0) {
-                        j=0;
-
-                        do {
-                           for(i=0;i<9;i++) {
-                              printf("%c", accouser[j][i]);
-                           }
-                           printf(" ");
-                           for(i=0;i<14;i++) {
-                              printf("%c", cpfuser[j][i]);
-                           }
-                           printf("\n");
-                           j++;
-                        } while(j<contuser);
+                        mostraCliente(cpfuser, accouser, contuser);
+                        printf("\n");
                         system("pause");
                      }
                      else {
                         printf("Nao ha usuarios cadastrados!\n");
                         system("pause");
-                        break;
                      }
                      break;
 
