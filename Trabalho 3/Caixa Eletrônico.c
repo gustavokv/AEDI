@@ -133,8 +133,11 @@ void gera_cpf_valido(char cpf[]) {
    cpf[9] = '\0';
 }
 
+//Objetivo: Mostra as informacoes dos clientes
 void mostraCliente(char cpf[50][14], char conta[50][9], int qntcliente) {
    int i=0, j;
+
+   system("cls");
 
    while(qntcliente>i) {
       printf("\n------------\nCliente %d:\n------------\nConta: ", i + 1);
@@ -282,6 +285,7 @@ int main () {
                         system("pause");
                      }
                      else {
+                        system("cls");
                         printf("Nao ha usuarios cadastrados!\n");
                         system("pause");
                      }
