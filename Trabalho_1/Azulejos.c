@@ -30,7 +30,7 @@ int main() {
 
         //Caso todos as entradas sejam 0 o programa se encerra
         if((nazulejos==0)&&(a==0)&&(b==0)) {
-            printf("Programa encerrado!");
+            printf("Programa encerrado!\n");
             return 0;
         }
 
