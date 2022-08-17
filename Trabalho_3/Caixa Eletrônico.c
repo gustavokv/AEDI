@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 //objetivo:escolhe dentre as letras do alfabeto ('a'..'z') uma letra aleatoriamente
 //parametros: nenhum
@@ -137,7 +138,7 @@ void gera_cpf_valido(char cpf[]) {
 void mostraCliente(char cpf[50][14], char conta[50][9], int qntcliente) {
    int i=0, j;
 
-   system("cls");
+   system("clear");
 
    while(qntcliente>i) {
       printf("\n------------\nCliente %d:\n------------\nConta: ", i + 1);
@@ -159,6 +160,8 @@ int main () {
    int opmenu, opmenucliente, opmenurelat, resp=0, qntrep, contuser=0; //Menu
    int i, j; //Contadores
 
+   char syspause[2];//Variaveis diversas
+
    char accouser[50][9], account[9]; //Contas
    int addconfirm=0, respadd;
 
@@ -173,7 +176,7 @@ int main () {
    }
 
    do{
-      system("cls");
+      system("clear");
 
       printf("MENU PRINCIPAL\n1-Cliente\n2-Saque\n3-Relatorios\n4-Finalizar\n-->");
       scanf("%d", &opmenu);
@@ -182,7 +185,7 @@ int main () {
 
          case 1:
             do {
-               system("cls");
+               system("clear");
 
                printf("MENU CLIENTE\n1-Incluir\n2-Mostrar\n3-Alterar\n4-Excluir\n5-Voltar\n-->");
                scanf("%d", &opmenucliente);
@@ -228,7 +231,7 @@ int main () {
                         insere_pontuacao_cpf(cpfnopont, cpf);
 
                         do{
-                           system("cls");
+                           system("clear");
 
                            printf("Deseja incluir a conta ");
                            for(i=0;i<9;i++) {
@@ -258,16 +261,21 @@ int main () {
                               contuser++; //Quantidades de usuarios cadastrados.
                               addconfirm = 1;
 
-                              system("pause");
+                              printf("Digite uma tecla para sair.");
+                              scanf("%s", syspause);
                            }
                            else if(respadd == 2) {
                               printf("--> Conta nao adicionada!\n\n");
                               addconfirm = 1;
-                              system("pause");
+
+                              printf("Digite uma tecla para sair.");
+                              scanf("%s", syspause);
                            }
                            else {
                               printf("\nEscolha uma opcao valida!\n");
-                              system("pause");
+
+                              printf("Digite uma tecla para sair.");
+                              scanf("%s", syspause);
                            }
                         } while(addconfirm != 1);
 
@@ -282,12 +290,16 @@ int main () {
                      if(contuser!=0) {
                         mostraCliente(cpfuser, accouser, contuser);
                         printf("\n");
-                        system("pause");
+
+                        printf("Digite uma tecla para sair.");
+                        scanf("%s", syspause);
                      }
                      else {
-                        system("cls");
+                        system("clear");
                         printf("Nao ha usuarios cadastrados!\n");
-                        system("pause");
+
+                        printf("Digite uma tecla para sair.");
+                        scanf("%s", syspause);
                      }
                      break;
 
@@ -296,7 +308,9 @@ int main () {
                   
                   default:
                      printf("Escolha uma opcao valida!\n");
-                     system("pause");
+
+                     printf("Digite uma tecla para sair.");
+                     scanf("%s", syspause);
                      break;
                }
             } while(opmenucliente != 5);
@@ -307,7 +321,7 @@ int main () {
 
             break;
          case 3:
-            system("cls");
+            system("clear");
 
             printf("MENU RELATORIOS\n1-Valores sacados\n2-Valor do saldo existente\n3-Quantidade de cedulas existentes\n4-Voltar ao menu principal\n");
             scanf("%d", &opmenurelat);
@@ -316,7 +330,9 @@ int main () {
             break;
          default:
             printf("Escolha uma opcao valida!\n");
-            system("pause");
+
+            printf("Digite uma tecla para sair.");
+            scanf("%s", syspause);
       }
    } while(opmenu != 4);
 }
