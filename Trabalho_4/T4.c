@@ -4,22 +4,18 @@
 
 //Objetivo: Formatar o texto original.
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
-void FormataTexto(char text[], char textformat[]) {
+void FormataTexto(char text[], char textformat[40][80]) {
 
     char linha[80], *token = strtok(text, " "), string[80];
-    int i=0, cont=80;
+    int i=0, cont=80, j=0;
 
     while(token != NULL) {
         strcat(string, token);
         strcat(string, " ");
 
-        while(string[i] != '\0') {
-            i++;
-        }
-
-        if(i>=80) {
-            strcat(textformat, string);
-            i=0;
+        if(strlen(string)<80) {
+            strcat(textformat[j], string);
+            strcat(textformat[j], " ");
         }
 
         token = strtok(NULL, " ");
@@ -30,7 +26,7 @@ void FormataTexto(char text[], char textformat[]) {
 
 void ExecutaMenu(char text[]) {
 
-    char choose, textformat[3100];
+    char choose, textformat[40][80];
 
     printf("\n\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
     printf("a) Imprimir o texto formatado;\n\
