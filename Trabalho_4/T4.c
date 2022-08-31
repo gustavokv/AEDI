@@ -6,19 +6,19 @@
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[]) {
 
-    char linha[80], *token = strtok(text, " ");
-    int i=0, j=0;
+    char linha[80], *token = strtok(text, " "), string[80];
+    int i=0, cont=80;
 
     while(token != NULL) {
-        strcat(linha, token);
-        strcat(linha, " ");
+        strcat(string, token);
+        strcat(string, " ");
 
-        while(linha[i] != '\0') {
+        while(string[i] != '\0') {
             i++;
         }
 
         if(i>=80) {
-            strcpy(textformat, linha);
+            strcat(textformat, string);
             i=0;
         }
 
@@ -55,7 +55,7 @@ k) Centralizar o texto;\n-->");
 
 int main()
 {
-    char text[]="William Henry Gates III KBE GCIH (Seattle, 28 de outubro de 1955) mais conhecido como Bill Gates,\
+    char text[9999]="William Henry Gates III KBE GCIH (Seattle, 28 de outubro de 1955) mais conhecido como Bill Gates,\
  e um magnata, empresario, diretor executivo, investidor, filantropo e autor americano, que ficou conhecido por \
  fundar junto com Paul Allen a Microsoft a maior e mais conhecida empresa de software do mundo em termos de valor \
  de mercado. Gates ocupa atualmente o cargo de presidente nao-executivo da Microsoft alem de ser classificado \
