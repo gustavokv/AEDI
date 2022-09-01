@@ -2,28 +2,39 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define PULA_LINHA "\n"
+
 //Objetivo: Formatar o texto original.
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[40][80]) {
 
-    char linha[80], *token = strtok(text, " "), string[80];
-    int i=0, cont=80, j=0;
+    char espaco[] = " ";
+    char *token = strtok(text, espaco), string[100];
+    int j=0;
 
     while(token != NULL) {
+        token = strtok(NULL, espaco);
+
         strcat(string, token);
-        strcat(string, " ");
+        strcat(string, espaco);
 
         if(strlen(string)<80) {
-            strcat(textformat[j], string);
-            strcat(textformat[j], " ");
+            strcat(textformat[j], token);
+            strcat(textformat[j], espaco);
         }
-
-        token = strtok(NULL, " ");
+        else{
+            j++;
+            strcpy(string, "\0");
+            strcpy(string, token);
+            strcat(string, espaco);
+            strcpy(textformat[j], token);
+            strcat(textformat[j], espaco);
+        }
     }
 
 }
 
-
+//Objetivo: Mostra o menu para editar o texto.
 void ExecutaMenu(char text[]) {
 
     char choose, textformat[40][80];
