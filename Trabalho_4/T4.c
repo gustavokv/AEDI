@@ -48,8 +48,14 @@ void ImprimeTextFormatado(char text[400][200]) {
 }
 
 //Objetivo: Mostra uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em qual(is) linha(s) e coluna(s).
-void MostraPalavra(char text[], char palavra[]) {
-    int i, j;
+void MostraPalavra(char textbase[400][200], char palavra[]) {
+    char *dest = textbase;
+    char *pont = strstr(textbase, palavra);
+    int i, pos;
+
+    pos = pont - dest;
+
+    printf("%d", pos);
 
     
 }
