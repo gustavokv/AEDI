@@ -2,45 +2,66 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define PULA_LINHA "\n"
+//Objetivo: Limpa o buffer do teclado.
+void flush_in(){ 
+    int ch;
+    while((ch = fgetc(stdin)) != EOF && ch != '\n'){} 
+}
 
 //Objetivo: Formatar o texto original.
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
-void FormataTexto(char text[], char textformat[40][80]) {
+void FormataTexto(char text[], char textformat[400][200]) {
 
-    char espaco[] = " ";
-    char *token = strtok(text, espaco), string[100];
+    char *token = strtok(text, " "), string[200];
     int j=0;
 
     while(token != NULL) {
-        token = strtok(NULL, espaco);
 
         strcat(string, token);
-        strcat(string, espaco);
+        strcat(string, " ");
 
         if(strlen(string)<80) {
             strcat(textformat[j], token);
-            strcat(textformat[j], espaco);
+            strcat(textformat[j], " ");
         }
         else{
             j++;
             strcpy(string, "\0");
             strcpy(string, token);
-            strcat(string, espaco);
+            strcat(string, " ");
             strcpy(textformat[j], token);
-            strcat(textformat[j], espaco);
+            strcat(textformat[j], " ");
         }
+
+        token = strtok(NULL, " ");
     }
 
+}
+
+//Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
+void ImprimeTextFormatado(char text[400][200]) {
+    int i;
+
+    for(i=0;i<41;i++) {
+        printf("%s\n", text[i]);
+    }
+}
+
+//Objetivo: Mostra uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em qual(is) linha(s) e coluna(s).
+void MostraPalavra(char text[], char palavra[]) {
+    int i, j;
+
+    
 }
 
 //Objetivo: Mostra o menu para editar o texto.
 void ExecutaMenu(char text[]) {
 
-    char choose, textformat[40][80];
+    char textformat[400][200], choose, palavra[30];
 
-    printf("\n\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
-    printf("a) Imprimir o texto formatado;\n\
+    do {
+        printf("\n\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
+        printf("a) Imprimir o texto formatado;\n\
 b) Dado uma palavra informar quantas vezes a palavra aparece e em qual(is) linha(s) e coluna(s) ela está;\n\
 c) Substituir uma palavra do texto por outra fornecida pelo usuário;\n\
 d) Substituir uma palavra do texto por outra fornecida pelo usuário;\n\
@@ -50,19 +71,40 @@ g) Colocar em caixa-alta o primeiro caracter de cada início de frase;\n\
 h) Alinhar o texto à esquerda;\n\
 i) Alinhar o texto à direita;\n\
 j) Justificar o texto;\n\
-k) Centralizar o texto;\n-->");
+k) Centralizar o texto;\n\
+l) Fechar o programa.\n-->");
 
-    scanf("%c", &choose);
+        scanf("%c", &choose);
 
-    FormataTexto(text, textformat);
+        FormataTexto(text, textformat);
 
-    printf("%s", textformat);
+        switch(choose) {
+            case 'a':
+                system("clear");
+                ImprimeTextFormatado(textformat);
+                break;
+            case 'b':
+                system("clear");
+                printf("Digite a palavra que deseja procurar:\n-->");
+                scanf("%s", palavra);
+                MostraPalavra(textformat, palavra);
+                break;
+            case 'l':
+                printf("\n[Programa encerrado!]\n");
+                break;
+            default:
+                printf("\n[Escolha uma opcao valida!]\n");
+                break;
+        }
+
+        flush_in();
+    }while(choose != 'l');    
         
 }
 
 int main()
 {
-    char text[9999]="William Henry Gates III KBE GCIH (Seattle, 28 de outubro de 1955) mais conhecido como Bill Gates,\
+    char text[]="William Henry Gates III KBE GCIH (Seattle, 28 de outubro de 1955) mais conhecido como Bill Gates,\
  e um magnata, empresario, diretor executivo, investidor, filantropo e autor americano, que ficou conhecido por \
  fundar junto com Paul Allen a Microsoft a maior e mais conhecida empresa de software do mundo em termos de valor \
  de mercado. Gates ocupa atualmente o cargo de presidente nao-executivo da Microsoft alem de ser classificado \
@@ -93,7 +135,7 @@ int main()
  o programa e vendeu-o por US$ 8 milhoes, mantendo a licenca do produto. Este viria a ser o MS-DOS. \
  Fonte: https://pt.wikipedia.org/wiki/Bill_Gates";
 
-    printf("\n\n%s",text);
+    //printf("\n\n%s",text);
 
     ExecutaMenu(text);
 
