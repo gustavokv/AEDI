@@ -20,7 +20,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
         strcat(string, token);
         strcat(string, " ");
 
-        if(strlen(string)<80) {
+        if(strlen(string)<=80) {
             strcat(textformat[j], token);
             strcat(textformat[j], " ");
         }
@@ -49,10 +49,27 @@ void ImprimeTextFormatado(char text[400][200]) {
 
 //Objetivo: Mostra uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em qual(is) linha(s) e coluna(s).
 void MostraPalavra(char textbase[400][200], char palavra[]) {
-    int i=0, pos, j=0, k=0;
-    int posicoes[80][3];
-    
-    
+    int i=0, j=0;
+    char string[100], *point;
+ 
+    while(i!=40) {
+        strcpy(string, textbase[i]);
+
+        do{
+            point = strstr(string, palavra);
+            
+            if(point){
+                while(string[j] != " ") {
+                    printf("%c", string[j]);
+                    strcpy(string[j], 'z');
+                    j++;
+                }
+            }
+            j=0;
+        }while(point);
+
+        i++;
+    }
 }
 
 //Objetivo: Mostra o menu para editar o texto.
@@ -89,6 +106,10 @@ l) Fechar o programa.\n-->");
                 printf("Digite a palavra que deseja procurar:\n-->");
                 scanf("%s", palavra);
                 MostraPalavra(textformat, palavra);
+                break;
+            case 'h':
+                system("clear");
+                ImprimeTextFormatado(textformat);
                 break;
             case 'l':
                 printf("\n[Programa encerrado!]\n");
