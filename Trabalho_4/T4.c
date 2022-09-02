@@ -12,19 +12,34 @@ void flush_in(){
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token = strtok(text, " "), string[200];
-    int j=0;
+    char *token = strtok(text, " "), string[200], *virg, *ponto, verif[12];
+    int j=0, pos;
 
     while(token != NULL) {
 
         strcat(string, token);
         strcat(string, " ");
 
+        strcpy(verif, token);
+
+        virg = strchr(verif, ',');
+        ponto = strchr(verif, '.');
+
+        if(virg) {
+            pos = virg - verif;
+            printf("%s ---- %d ---- %s\n", verif, pos, virg);
+        }
+        if(ponto) {
+            pos = ponto - verif;
+            printf("%s ---- %d ---- %s\n", verif, pos, ponto);
+        }
+
         if(strlen(string)<=80) {
             strcat(textformat[j], token);
             strcat(textformat[j], " ");
         }
         else{
+            //printf("%d = %d\n", j, strlen(textformat[j]));
             j++;
             strcpy(string, "\0");
             strcpy(string, token);
@@ -43,7 +58,7 @@ void ImprimeTextFormatado(char text[400][200]) {
     int i;
 
     for(i=0;i<41;i++) {
-        printf("%s\n", text[i]);
+        printf("%d = %s\n", i, text[i]);
     }
 }
 
@@ -98,7 +113,7 @@ l) Fechar o programa.\n-->");
 
         switch(choose) {
             case 'a':
-                system("clear");
+                //system("clear");
                 ImprimeTextFormatado(textformat);
                 break;
             case 'b':
