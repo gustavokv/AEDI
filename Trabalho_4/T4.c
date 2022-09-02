@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Alunos:
+//Gustavo Kermaunar Volobueff;
+//Victor Keony;
+//Vinícius Schautz;
+//Emmerson Badocco;
+//Gustavo Martins.
+
 //Objetivo: Limpa o buffer do teclado.
 void flush_in(){ 
     int ch;
@@ -12,61 +19,78 @@ void flush_in(){
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token = strtok(text, " "), string[200], *virg, *ponto, verif[12];
+    char *token = strtok(text, " "), string[200], *virg, *ponto; //Token irá separar as palavras pelo espaço.
     int j=0, pos;
 
-    while(token != NULL) {
+    while(token) {
 
         strcat(string, token);
         strcat(string, " ");
 
-        strcpy(verif, token);
-
-        virg = strchr(verif, ',');
-        ponto = strchr(verif, '.');
-
-        if(virg) {
-            pos = virg - verif;
-            printf("%s ---- %d ---- %s\n", verif, pos, virg);
-        }
-        if(ponto) {
-            pos = ponto - verif;
-            printf("%s ---- %d ---- %s\n", verif, pos, ponto);
-        }
+        virg = strchr(token, ','); //Ponteiro para a vírgula em uma palavra.
+        ponto = strchr(token, '.'); //Ponteiro para o ponto em uma palavra.
 
         if(strlen(string)<=80) {
             strcat(textformat[j], token);
             strcat(textformat[j], " ");
         }
         else{
-            //printf("%d = %d\n", j, strlen(textformat[j]));
-            j++;
-            strcpy(string, "\0");
-            strcpy(string, token);
-            strcat(string, " ");
-            strcpy(textformat[j], token);
-            strcat(textformat[j], " ");
+            if(virg && strlen(string)<=82) {
+                pos = virg - token; //Posição da vírgula na palavra.
+                token[pos] = " ";
+                strcat(textformat[j], token); //Faz com que a linha receba a palavra sem a vírgula.
+                j++;
+                strcpy(string, "\0");
+                strcpy(string, ",");
+                strcat(string, " ");
+                strcpy(textformat[j], ",");
+                strcat(textformat[j], " ");
+                
+            }
+            else if(ponto && strlen(string)<=82) {
+                pos = ponto - token; //Posição do ponto na palavra.
+                token[pos] = " ";
+                strcat(textformat[j], token); //Faz com que a linha receba a palavra sem o ponto.
+                j++;
+                strcpy(string, "\0");
+                strcpy(string, ".");
+                strcat(string, " ");
+                strcpy(textformat[j], ".");
+                strcat(textformat[j], " ");
+            }
+            else { 
+                j++;
+                strcpy(string, "\0");
+                strcpy(string, token);
+                strcat(string, " ");
+                strcpy(textformat[j], token);
+                strcat(textformat[j], " ");
+            }
         }
 
-        token = strtok(NULL, " ");
+        token = strtok(NULL, " "); //Faz com que o ponteiro token continue varrendo a string.
     }
 
 }
 
 //Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
+//Parâmetros: text é o texto já formatado.
 void ImprimeTextFormatado(char text[400][200]) {
     int i;
-
-    for(i=0;i<41;i++) {
-        printf("%d = %s\n", i, text[i]);
+    
+    for(i=0;i<40;i++) {    
+        printf("%s\n", text[i]);
     }
+    strcpy(text, "\0"); 
 }
 
-//Objetivo: Mostra uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em qual(is) linha(s) e coluna(s).
+//Objetivo: Função "b)" de mostrar uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em 
+//          qual(is) linha(s) e coluna(s).
+//Parâmetros: textbase é o texto formatado; palavra é a palavra que deseja ser procurada.
 void MostraPalavra(char textbase[400][200], char palavra[]) {
     int i=0, j=0;
     char string[100], *point;
- 
+
     while(i!=40) {
         strcpy(string, textbase[i]);
 
@@ -88,6 +112,7 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 }
 
 //Objetivo: Mostra o menu para editar o texto.
+//Parâmetros: text é o texto sem estar formatado.
 void ExecutaMenu(char text[]) {
 
     char textformat[400][200], choose, palavra[30];
@@ -113,7 +138,7 @@ l) Fechar o programa.\n-->");
 
         switch(choose) {
             case 'a':
-                //system("clear");
+                system("clear");
                 ImprimeTextFormatado(textformat);
                 break;
             case 'b':
@@ -172,7 +197,7 @@ int main()
  o programa e vendeu-o por US$ 8 milhoes, mantendo a licenca do produto. Este viria a ser o MS-DOS. \
  Fonte: https://pt.wikipedia.org/wiki/Bill_Gates";
 
-    //printf("\n\n%s",text);
+    //printf("\n\n%s", text);
 
     ExecutaMenu(text);
 
