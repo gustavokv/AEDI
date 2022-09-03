@@ -15,15 +15,26 @@ void flush_in(){
     while((ch = fgetc(stdin)) != EOF && ch != '\n'){} 
 }
 
+//Objetivo: Tranforma uma matriz em um vetor, para fazer a formatação novamente corretamente.
+//Parâmetros: matriz é a matriz e array, o vetor.
+void MatrizParaVetor(char matriz[400][200], char array[3200]) {
+    int i;
+
+    for(i=0;i<400;i++) {
+        strcat(array, matriz[i]);
+    }
+}
+
 //Objetivo: Formatar o texto original.
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token = strtok(text, " "), string[200], *virg, *ponto; //Token irá separar as palavras pelo espaço.
-    int j=0, pos;
+    char *token, string[200], *virg, *ponto; //Token irá separar as palavras pelo espaço.
+    int j=0, pos, i;
 
     strcpy(string, "\0");
-
+    token = strtok(text, " ");
+   
     while(token) {
 
         strcat(string, token);
@@ -74,7 +85,6 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
         token = strtok(NULL, " "); //Faz com que o ponteiro token continue varrendo a string.
     }
-
 }
 
 //Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
@@ -82,7 +92,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
 void ImprimeTextFormatado(char text[400][200]) {
     int i;
 
-    for(i=0;i<39;i++) {    
+    for(i=0;i<45;i++) {    
         printf("%d %s\n", strlen(text[i]), text[i]);
     }
 
@@ -120,26 +130,44 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
     }
 
     if(qnt>0) 
-        printf("\n--> Quantidade de vezes que a palavra [%s] apareceu: [%d].", palavra, qnt);
+        printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.", palavra, qnt);
     else
         printf("--> A palavra [%s] nao foi encontrada!", palavra);
 }
 
+//Objetivo: Substituir uma palavra dentro do texto formatado.
+//Parâmetros: text é o texto formatado, palavra é a palavra que deve ser substituída e palavrasubs é a 
+//            palavra que será trocada.
 void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
-    int i=0, pos;
-    char *point;
+    int i=0, qnt=0, lin, j;
+    char *point, *token, string[100], textfo[400][200];
 
     while(i!=40) {
-        point = strstr(text[i], palavra);
+        point = strstr(text[i], palavra); //Aponta para a palavra que deve ser trocada.
 
         if(point) {
-            pos = point - text[i];
-            memmove(text[i]+pos, palavrasubs, strlen(palavrasubs));
-            printf("--> Palavra [%s] substituida por [%s] com sucesso!", palavra, palavrasubs);
+            lin = i; 
+
+            token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
+            while(token) {
+                if(strcmp(token, palavra) == 0 && qnt == 0) {
+                    strcat(string, palavrasubs);
+                    strcat(string, " ");
+                    qnt++;
+                }
+                else{
+                    strcat(string, token);
+                    strcat(string, " ");
+                }
+                token = strtok(NULL, " ");
+            }
+            strcpy(text[lin], string); 
+
+            printf("\n--> Palavra [%s] substituida por [%s] com sucesso!", palavra, palavrasubs);
             break;
         }
         else
-            i++;
+            i++; //Pula a linha do texto.
     }
     if(i==40)
         printf("--> A palavra [%s] nao foi encontrada!", palavra);
@@ -149,10 +177,15 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 //Parâmetros: text é o texto sem estar formatado.
 void ExecutaMenu(char text[]) {
 
-    char textformat[400][200], choose, palavra[30], palavrasubs[30], subspalavra[30];
+    char textformat[400][200], textnovoformat[400][200], textsubsformat[400][200];
+    char palavra[30], palavrasubs[30], subspalavra[30], arraytextsubs[3200];
+    char choose;
+    int i;
+
+    FormataTexto(text, textformat);
 
     do {
-        printf("\n\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
+        printf("\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
         printf("a) Imprimir o texto formatado;\n\
 b) Dado uma palavra informar quantas vezes a palavra aparece e em qual(is) linha(s) e coluna(s) ela está;\n\
 c) Substituir uma palavra do texto por outra fornecida pelo usuário;\n\
@@ -167,8 +200,6 @@ k) Centralizar o texto;\n\
 l) Fechar o programa.\n-->");
 
         scanf("%c", &choose);
-
-        FormataTexto(text, textformat);
 
         switch(choose) {
             case 'a':
@@ -185,9 +216,24 @@ l) Fechar o programa.\n-->");
                 system("clear");
                 printf("Digite a palavra que deseja substituir no texto:\n-->");
                 scanf("%s", palavrasubs);
+
                 printf("Digite a palavra que deseja inserir no lugar:\n-->");
                 scanf("%s", subspalavra);
-                SubstituiPalavra(textformat, palavrasubs, subspalavra);
+
+                for(i=0;i<40;i++) {
+                    strcpy(textsubsformat[i], textformat[i]);
+                }       
+
+                SubstituiPalavra(textsubsformat, palavrasubs, subspalavra);
+                
+                MatrizParaVetor(textsubsformat, arraytextsubs);
+        
+                FormataTexto(arraytextsubs, textnovoformat);
+                
+                for(i=0;i<40;i++) {
+                    strcpy(textformat[i], textnovoformat[i]);
+                }
+
                 break;
             case 'h':
                 system("clear");
