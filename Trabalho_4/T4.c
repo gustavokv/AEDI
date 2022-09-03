@@ -15,6 +15,15 @@ void flush_in(){
     while((ch = fgetc(stdin)) != EOF && ch != '\n'){} 
 }
 
+//Objetivo: Reseta uma matriz.
+void LimpaMatriz(char matriz[400][200]) {
+    int i;
+
+    for(i=0;i<400;i++) {
+        strcpy(matriz[i], "\0");
+    }
+}
+
 //Objetivo: Tranforma uma matriz em um vetor, para fazer a formatação novamente corretamente.
 //Parâmetros: matriz é a matriz e array, o vetor.
 void MatrizParaVetor(char matriz[400][200], char array[3200]) {
@@ -151,7 +160,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
             token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
             while(token) {
                 if(strcmp(token, palavra) == 0 && qnt == 0) {
-                    strcat(string, palavrasubs);
+                    strcat(string, palavrasubs); //Caso encontre a palavra desejada, será substituída pela digitada.
                     strcat(string, " ");
                     qnt++;
                 }
@@ -161,9 +170,9 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                 }
                 token = strtok(NULL, " ");
             }
-            strcpy(text[lin], string); 
+            strcpy(text[lin], string);  //Coloca novamente a linha que foi alterada na matriz.
 
-            printf("\n--> Palavra [%s] substituida por [%s] com sucesso!", palavra, palavrasubs);
+            printf("\n--> Palavra [%s] substituida por [%s] com sucesso!\n", palavra, palavrasubs);
             break;
         }
         else
@@ -204,52 +213,65 @@ l) Fechar o programa.\n-->");
         switch(choose) {
             case 'a':
                 system("clear");
+
                 ImprimeTextFormatado(textformat);
+
                 break;
             case 'b':
                 system("clear");
+
                 printf("Digite a palavra que deseja procurar:\n-->");
                 scanf("%s", palavra);
+
                 MostraPalavra(textformat, palavra);
+
                 break;
             case 'c':
                 system("clear");
+
                 printf("Digite a palavra que deseja substituir no texto:\n-->");
                 scanf("%s", palavrasubs);
 
                 printf("Digite a palavra que deseja inserir no lugar:\n-->");
                 scanf("%s", subspalavra);
 
-                for(i=0;i<40;i++) {
+                for(i=0;i<40;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
                     strcpy(textsubsformat[i], textformat[i]);
                 }       
 
                 SubstituiPalavra(textsubsformat, palavrasubs, subspalavra);
                 
-                MatrizParaVetor(textsubsformat, arraytextsubs);
-        
+                MatrizParaVetor(textsubsformat, arraytextsubs); 
+
                 FormataTexto(arraytextsubs, textnovoformat);
                 
+                strcpy(arraytextsubs, "\0"); //Reseta o array para não estar sujo quando executar novamente.
+
                 for(i=0;i<40;i++) {
-                    strcpy(textformat[i], textnovoformat[i]);
+                    strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
                 }
+
+                LimpaMatriz(textnovoformat); //Reseta também a matriz.
 
                 break;
             case 'h':
                 system("clear");
+
                 ImprimeTextFormatado(textformat);
+
                 break;
             case 'l':
                 printf("\n[Programa encerrado!]\n");
+
                 break;
             default:
                 printf("\n[Escolha uma opcao valida!]\n");
+                
                 break;
         }
 
         flush_in();
-    }while(choose != 'l');    
-        
+    }while(choose != 'l');          
 }
 
 int main()
