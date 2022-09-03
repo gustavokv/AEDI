@@ -77,13 +77,13 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
 }
 
-//Objetivo: Cumpre a fu     printf("%d %s\n", strlen(string), string);nção "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
+//Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
 //Parâmetros: text é o texto já formatado.
 void ImprimeTextFormatado(char text[400][200]) {
     int i;
 
     for(i=0;i<39;i++) {    
-        printf("%s\n", text[i]);
+        printf("%d %s\n", strlen(text[i]), text[i]);
     }
 
 }
@@ -125,11 +125,31 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
         printf("--> A palavra [%s] nao foi encontrada!", palavra);
 }
 
+void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
+    int i=0, pos;
+    char *point;
+
+    while(i!=40) {
+        point = strstr(text[i], palavra);
+
+        if(point) {
+            pos = point - text[i];
+            memmove(text[i]+pos, palavrasubs, strlen(palavrasubs));
+            printf("--> Palavra [%s] substituida por [%s] com sucesso!", palavra, palavrasubs);
+            break;
+        }
+        else
+            i++;
+    }
+    if(i==40)
+        printf("--> A palavra [%s] nao foi encontrada!", palavra);
+}
+
 //Objetivo: Mostra o menu para editar o texto.
 //Parâmetros: text é o texto sem estar formatado.
 void ExecutaMenu(char text[]) {
 
-    char textformat[400][200], choose, palavra[30];
+    char textformat[400][200], choose, palavra[30], palavrasubs[30], subspalavra[30];
 
     do {
         printf("\n\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
@@ -160,6 +180,14 @@ l) Fechar o programa.\n-->");
                 printf("Digite a palavra que deseja procurar:\n-->");
                 scanf("%s", palavra);
                 MostraPalavra(textformat, palavra);
+                break;
+            case 'c':
+                system("clear");
+                printf("Digite a palavra que deseja substituir no texto:\n-->");
+                scanf("%s", palavrasubs);
+                printf("Digite a palavra que deseja inserir no lugar:\n-->");
+                scanf("%s", subspalavra);
+                SubstituiPalavra(textformat, palavrasubs, subspalavra);
                 break;
             case 'h':
                 system("clear");
