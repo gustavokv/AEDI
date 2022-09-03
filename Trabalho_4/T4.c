@@ -31,8 +31,8 @@ void FormataTexto(char text[], char textformat[400][200]) {
         ponto = strchr(token, '.'); //Ponteiro para o ponto em uma palavra.
 
         if(strlen(string)<=80) {
-            strcat(textformat[j], token);
-            strcat(textformat[j], " ");
+            strcat(textformat[j], token); //Adiciona uma palavra a matriz do texto formatado.
+            strcat(textformat[j], " "); 
         }
         else{
             if(virg && strlen(string)<=82) {
@@ -88,26 +88,21 @@ void ImprimeTextFormatado(char text[400][200]) {
 //          qual(is) linha(s) e coluna(s).
 //Parâmetros: textbase é o texto formatado; palavra é a palavra que deseja ser procurada.
 void MostraPalavra(char textbase[400][200], char palavra[]) {
-    int i=0, j=0;
+    int i=0, pos;
     char string[100], *point;
 
     while(i!=40) {
         strcpy(string, textbase[i]);
+        point = strstr(string, palavra);
+        
+        if(point) {
+            pos = point - string;
 
-        do{
-            point = strstr(string, palavra);
-            
-            if(point){
-                while(string[j] != " ") {
-                    printf("%c", string[j]);
-                    strcpy(string[j], 'z');
-                    j++;
-                }
-            }
-            j=0;
-        }while(point);
-
-        i++;
+              
+        }
+        else {
+            i++;
+        }
     }
 }
 
