@@ -81,29 +81,41 @@ void ImprimeTextFormatado(char text[400][200]) {
     for(i=0;i<40;i++) {    
         printf("%s\n", text[i]);
     }
-    strcpy(text, "\0"); 
+    strcpy(text, "\0");
 }
 
 //Objetivo: Função "b)" de mostrar uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em 
 //          qual(is) linha(s) e coluna(s).
 //Parâmetros: textbase é o texto formatado; palavra é a palavra que deseja ser procurada.
 void MostraPalavra(char textbase[400][200], char palavra[]) {
-    int i=0, pos;
-    char string[100], *point;
+    int i=0, pos, qnt=0;
+    char string[200][400], *point, subs[] = {".................."};
 
-    while(i!=40) {
-        strcpy(string, textbase[i]);
-        point = strstr(string, palavra);
-        
+    for(i=0;i<40;i++) {
+        strcpy(string[i], textbase[i]);
+    }
+
+    i=0;
+
+    while(i != 40) {
+        point = strstr(string[i], palavra);
+
         if(point) {
-            pos = point - string;
-
-              
+            pos = point - string[i];
+            memmove(string[i]+pos, subs, strlen(palavra));
+            qnt++;
+            printf("\n-->Linha: %d Coluna: %d", i, pos);
         }
         else {
             i++;
         }
     }
+
+    for(i=0;i<40;i++) {
+        strcpy(string[i], "\0");
+    }
+    
+    printf("\n-->Quantidade de vezes que a palavra %s apareceu: %d", palavra, qnt);
 }
 
 //Objetivo: Mostra o menu para editar o texto.
