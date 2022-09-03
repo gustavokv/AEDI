@@ -31,6 +31,7 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
 
     for(i=0;i<400;i++) {
         strcat(array, matriz[i]);
+        strcat(array, " ");
     }
 }
 
