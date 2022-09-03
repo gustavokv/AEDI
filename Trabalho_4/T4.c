@@ -22,17 +22,21 @@ void FormataTexto(char text[], char textformat[400][200]) {
     char *token = strtok(text, " "), string[200], *virg, *ponto; //Token irá separar as palavras pelo espaço.
     int j=0, pos;
 
+    strcpy(string, "\0");
+
     while(token) {
 
         strcat(string, token);
-        strcat(string, " ");
+        if(strlen(string)!=80) //Para não considerar o espaço no final da linha na hora de inserir a palavra no texto formatado.
+            strcat(string, " ");
 
         virg = strchr(token, ','); //Ponteiro para a vírgula em uma palavra.
         ponto = strchr(token, '.'); //Ponteiro para o ponto em uma palavra.
 
         if(strlen(string)<=80) {
             strcat(textformat[j], token); //Adiciona uma palavra a matriz do texto formatado.
-            strcat(textformat[j], " "); 
+            if(strlen(textformat[j])!=80)
+                strcat(textformat[j], " "); 
         }
         else{
             if(virg && strlen(string)<=82) {
@@ -73,15 +77,15 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
 }
 
-//Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
+//Objetivo: Cumpre a fu     printf("%d %s\n", strlen(string), string);nção "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
 //Parâmetros: text é o texto já formatado.
 void ImprimeTextFormatado(char text[400][200]) {
     int i;
-    
-    for(i=0;i<40;i++) {    
+
+    for(i=0;i<39;i++) {    
         printf("%s\n", text[i]);
     }
-    strcpy(text, "\0");
+
 }
 
 //Objetivo: Função "b)" de mostrar uma palavra desejada pelo usuário quantas vezes a mesma apareceu e em 
@@ -92,19 +96,19 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
     char string[200][400], *point, subs[] = {".................."};
 
     for(i=0;i<40;i++) {
-        strcpy(string[i], textbase[i]);
+        strcpy(string[i], textbase[i]); //Outro texto para não interferir no original formatado.
     }
 
     i=0;
 
     while(i != 40) {
-        point = strstr(string[i], palavra);
+        point = strstr(string[i], palavra); //Ponteiro que aponta para a primeira ocorrência da palavra.
 
         if(point) {
-            pos = point - string[i];
-            memmove(string[i]+pos, subs, strlen(palavra));
+            pos = point - string[i]; //Posição da palavra.
+            memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
             qnt++;
-            printf("\n-->Linha: %d Coluna: %d", i, pos);
+            printf("\n--> Linha: %d Coluna: %d;", i, pos);
         }
         else {
             i++;
@@ -114,8 +118,11 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
     for(i=0;i<40;i++) {
         strcpy(string[i], "\0");
     }
-    
-    printf("\n-->Quantidade de vezes que a palavra %s apareceu: %d", palavra, qnt);
+
+    if(qnt>0) 
+        printf("\n--> Quantidade de vezes que a palavra [%s] apareceu: [%d].", palavra, qnt);
+    else
+        printf("--> A palavra [%s] nao foi encontrada!", palavra);
 }
 
 //Objetivo: Mostra o menu para editar o texto.
