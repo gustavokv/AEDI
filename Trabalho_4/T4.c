@@ -156,6 +156,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 
     strcpy(palavramod, "\0");
     strcpy(palavramodsubis, "\0");
+    strcpy(string, "\0");
 
     while(i!=40) {
         point = strstr(text[i], palavra); //Aponta para a palavra que deve ser trocada.
@@ -206,7 +207,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
             i++; //Pula a linha do texto.
     }
     if(confirm == 0)
-        printf("--> A palavra [%s] nao foi encontrada!", palavra);
+        printf("\n--> A palavra [%s] nao foi encontrada!", palavra);
 }
 
 //Objetivo: Cumpre a função 'd)' de substituir todas as ocorrências de uma palavra.
@@ -227,20 +228,17 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
 
         if(point) {
             pos = point - string[i]; //Posição da palavra.
-            memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
-            qntrep++;
+            memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada para verificar
+            qntrep++;                                      //a próxima vez que ela aparece.
         }
         else {
             i++;
         }
     }
 
-    printf("%d", qntrep);
-
-    for(i=0;i<qntrep;i++){
+    for(i=0;i<qntrep;i++) { //Repete até substituir todas as ocorrências.
         SubstituiPalavra(text, palavra, palavrasubs);
     }
-
 }
 
 //Objetivo: Mostra o menu para editar o texto.
