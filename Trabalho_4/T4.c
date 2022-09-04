@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
 //Alunos:
 //Gustavo Kermaunar Volobueff;
 //Victor Keony;
 //Vinícius Schautz;
 //Emmerson Badocco;
 //Gustavo Martins.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 //Objetivo: Limpa o buffer do teclado.
 void flush_in(){ 
@@ -113,22 +113,22 @@ void ImprimeTextFormatado(char text[400][200]) {
 //          qual(is) linha(s) e coluna(s).
 //Parâmetros: textbase é o texto formatado; palavra é a palavra que deseja ser procurada.
 void MostraPalavra(char textbase[400][200], char palavra[]) {
-    int i=0, pos, qnt=0;
+    int i=0, pos, qntrep=0;
     char string[200][400], *point, subs[] = {".................."};
 
-    for(i=0;i<40;i++) {
+    for(i=0;i<45;i++) {
         strcpy(string[i], textbase[i]); //Outro texto para não interferir no original formatado.
     }
 
     i=0;
 
-    while(i != 40) {
+    while(i != 45) {
         point = strstr(string[i], palavra); //Ponteiro que aponta para a primeira ocorrência da palavra.
 
         if(point) {
             pos = point - string[i]; //Posição da palavra.
             memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
-            qnt++;
+            qntrep++;
             printf("\n--> Linha: %d Coluna: %d;", i, pos);
         }
         else {
@@ -140,8 +140,8 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
         strcpy(string[i], "\0");
     }
 
-    if(qnt>0) 
-        printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.", palavra, qnt);
+    if(qntrep>0) 
+        printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.", palavra, qntrep);
     else
         printf("--> A palavra [%s] nao foi encontrada!", palavra);
 }
@@ -150,8 +150,8 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 //Parâmetros: text é o texto formatado, palavra é a palavra que deve ser substituída e palavrasubs é a 
 //            palavra que será trocada.
 void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
-    int i=0, qnt=0, lin, j, pos;
-    char *point, *token, subscharpre, subscharpos[2];
+    int i=0, qnt=0, lin, j, pos, confirm=0;
+    char *point, *token, subscharpre[2], subscharpos[2];
     char string[100], palavramod[30], palavramodsubis[30];
 
     strcpy(palavramod, "\0");
@@ -165,13 +165,11 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 
             pos = point - text[i];
 
-            if(!isalpha(text[i][pos-1]) && !isblank(text[i][pos-1])) {
-                subscharpre = text[i][pos-1];
+            if(!isalpha(text[i][pos-1]) && !isblank(text[i][pos-1])) { //Caso haja algum caracter especial uma letra antes
+                subscharpre[0] = text[i][pos-1];                       //da palavra
 
-                palavramod[0] = subscharpre;
-                palavramodsubis[0] = subscharpre;
-
-                printf("%s\n\n", palavramodsubis);
+                palavramod[0] = subscharpre[0];
+                strcpy(palavramodsubis, subscharpre);
 
                 strcat(palavramod, palavra);
                 strcat(palavramodsubis, palavrasubs);
@@ -180,8 +178,8 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                 strcpy(palavramod, palavra);
                 strcpy(palavramodsubis, palavrasubs);
             }
-            if(!isalpha(text[i][pos+strlen(palavra)]) && !isblank(text[i][pos+strlen(palavra)])) {
-                subscharpos[0] = text[i][pos+strlen(palavra)];
+            if(!isalpha(text[i][pos+strlen(palavra)]) && !isblank(text[i][pos+strlen(palavra)])) { //Caso haja algum caracter
+                subscharpos[0] = text[i][pos+strlen(palavra)];                                     //depois.
    
                 strcat(palavramod, subscharpos);
                 strcat(palavramodsubis, subscharpos);
@@ -189,10 +187,10 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 
             token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
             while(token) {
-                printf("%s %s %s = %d %d %d\n", token, palavramod, palavramodsubis, strlen(token), strlen(palavramod), strlen(palavramodsubis));
                 if(strcmp(token, palavramod) == 0) {
                     strcat(string, palavramodsubis); //Caso encontre a palavra desejada, será substituída pela digitada.
                     strcat(string, " ");
+                    confirm++;
                 }
                 else{
                     strcat(string, token);
@@ -207,8 +205,42 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
         else
             i++; //Pula a linha do texto.
     }
-    if(i==40)
+    if(confirm == 0)
         printf("--> A palavra [%s] nao foi encontrada!", palavra);
+}
+
+//Objetivo: Cumpre a função 'd)' de substituir todas as ocorrências de uma palavra.
+//Parâmetros: palavra é a palavra a ser substituída e palavrasubs é a palavra que entrará no lugar.
+void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasubs[]) {
+
+    int i=0, qntrep=0, pos;
+    char *point, string[400][200], subs[] = {".............."};
+
+    for(i=0;i<45;i++) {
+        strcpy(string[i], text[i]); //Outro texto para não interferir no original formatado.
+    }
+
+    i=0;
+
+    while(i != 45) {
+        point = strstr(string[i], palavra); //Ponteiro que aponta para a primeira ocorrência da palavra.
+
+        if(point) {
+            pos = point - string[i]; //Posição da palavra.
+            memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
+            qntrep++;
+        }
+        else {
+            i++;
+        }
+    }
+
+    printf("%d", qntrep);
+
+    for(i=0;i<qntrep;i++){
+        SubstituiPalavra(text, palavra, palavrasubs);
+    }
+
 }
 
 //Objetivo: Mostra o menu para editar o texto.
@@ -227,7 +259,7 @@ void ExecutaMenu(char text[]) {
         printf("a) Imprimir o texto formatado;\n\
 b) Dado uma palavra informar quantas vezes a palavra aparece e em qual(is) linha(s) e coluna(s) ela está;\n\
 c) Substituir uma palavra do texto por outra fornecida pelo usuário;\n\
-d) Substituir uma palavra do texto por outra fornecida pelo usuário;\n\
+d) Substituir uma palavra do texto por outra fornecida pelo usuário. Todas as ocorrências da palavra devem ser substituídas; \n\
 e) Colocar o texto em caixa-alta, ou seja, todos seus caracteres em maiúsculo;\n\
 f) Colocar o texto em caixa-baixa, ou seja, todos seus caracteres em minúsculo;\n\
 g) Colocar em caixa-alta o primeiro caracter de cada início de frase;\n\
@@ -264,7 +296,7 @@ l) Fechar o programa.\n-->");
                 printf("Digite a palavra que deseja inserir no lugar:\n-->");
                 scanf("%s", subspalavra);
 
-                for(i=0;i<40;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
+                for(i=0;i<45;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
                     strcpy(textsubsformat[i], textformat[i]);
                 }       
 
@@ -276,7 +308,35 @@ l) Fechar o programa.\n-->");
                 
                 strcpy(arraytextsubs, "\0"); //Reseta o array para não estar sujo quando executar novamente.
 
-                for(i=0;i<40;i++) {
+                for(i=0;i<45;i++) {
+                    strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
+                }
+
+                LimpaMatriz(textnovoformat); //Reseta também a matriz.
+
+                break;
+            case 'd':
+                system("clear");
+
+                printf("Digite a palavra que deseja substituir no texto:\n-->");
+                scanf("%s", palavrasubs);
+
+                printf("Digite a palavra que deseja inserir no lugar:\n-->");
+                scanf("%s", subspalavra);
+
+                for(i=0;i<45;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
+                    strcpy(textsubsformat[i], textformat[i]);
+                }      
+
+                SubstituiVariasPalavras(textsubsformat, palavrasubs, subspalavra);
+
+                MatrizParaVetor(textsubsformat, arraytextsubs); 
+
+                FormataTexto(arraytextsubs, textnovoformat);
+                
+                strcpy(arraytextsubs, "\0"); //Reseta o array para não estar sujo quando executar novamente.
+
+                for(i=0;i<45;i++) {
                     strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
                 }
 
