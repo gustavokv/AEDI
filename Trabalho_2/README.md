@@ -1,3 +1,5 @@
+Atenção: Este trabalho não é de minha autoria, e sim de meu colega: https://github.com/keon-y
+
 Desenvolver um sistema para saques de um caixa eletrônico que deverá liberar o menor
 número de cédulas para um valor solicitado pelo cliente. As cédulas armazenadas no
 caixa são de 450, 250, 50, 20, 10, 5, 2 e 1 real.
