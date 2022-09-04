@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 //Alunos:
 //Gustavo Kermaunar Volobueff;
@@ -149,21 +150,49 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 //Parâmetros: text é o texto formatado, palavra é a palavra que deve ser substituída e palavrasubs é a 
 //            palavra que será trocada.
 void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
-    int i=0, qnt=0, lin, j;
-    char *point, *token, string[100], textfo[400][200];
+    int i=0, qnt=0, lin, j, pos;
+    char *point, *token, subscharpre, subscharpos[2];
+    char string[100], palavramod[30], palavramodsubis[30];
+
+    strcpy(palavramod, "\0");
+    strcpy(palavramodsubis, "\0");
 
     while(i!=40) {
         point = strstr(text[i], palavra); //Aponta para a palavra que deve ser trocada.
 
         if(point) {
-            lin = i; 
+            lin = i;
+
+            pos = point - text[i];
+
+            if(!isalpha(text[i][pos-1]) && !isblank(text[i][pos-1])) {
+                subscharpre = text[i][pos-1];
+
+                palavramod[0] = subscharpre;
+                palavramodsubis[0] = subscharpre;
+
+                printf("%s\n\n", palavramodsubis);
+
+                strcat(palavramod, palavra);
+                strcat(palavramodsubis, palavrasubs);
+            }
+            else {
+                strcpy(palavramod, palavra);
+                strcpy(palavramodsubis, palavrasubs);
+            }
+            if(!isalpha(text[i][pos+strlen(palavra)]) && !isblank(text[i][pos+strlen(palavra)])) {
+                subscharpos[0] = text[i][pos+strlen(palavra)];
+   
+                strcat(palavramod, subscharpos);
+                strcat(palavramodsubis, subscharpos);
+            }
 
             token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
             while(token) {
-                if(strcmp(token, palavra) == 0 && qnt == 0) {
-                    strcat(string, palavrasubs); //Caso encontre a palavra desejada, será substituída pela digitada.
+                printf("%s %s %s = %d %d %d\n", token, palavramod, palavramodsubis, strlen(token), strlen(palavramod), strlen(palavramodsubis));
+                if(strcmp(token, palavramod) == 0) {
+                    strcat(string, palavramodsubis); //Caso encontre a palavra desejada, será substituída pela digitada.
                     strcat(string, " ");
-                    qnt++;
                 }
                 else{
                     strcat(string, token);
@@ -172,7 +201,6 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                 token = strtok(NULL, " ");
             }
             strcpy(text[lin], string);  //Coloca novamente a linha que foi alterada na matriz.
-
             printf("\n--> Palavra [%s] substituida por [%s] com sucesso!\n", palavra, palavrasubs);
             break;
         }
@@ -263,11 +291,9 @@ l) Fechar o programa.\n-->");
                 break;
             case 'l':
                 printf("\n[Programa encerrado!]\n");
-
                 break;
             default:
                 printf("\n[Escolha uma opcao valida!]\n");
-                
                 break;
         }
 
