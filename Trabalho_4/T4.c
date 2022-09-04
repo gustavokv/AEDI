@@ -40,7 +40,7 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token, string[200], *virg, *ponto; //Token irá separar as palavras pelo espaço.
+    char *token, string[200], *virg, *ponto, *traco, aux[15]; //Token irá separar as palavras pelo espaço.
     int j=0, pos, i;
 
     strcpy(string, "\0");
@@ -54,6 +54,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
         virg = strchr(token, ','); //Ponteiro para a vírgula em uma palavra.
         ponto = strchr(token, '.'); //Ponteiro para o ponto em uma palavra.
+        traco = strchr(token, '-');
 
         if(strlen(string)<=80) {
             strcat(textformat[j], token); //Adiciona uma palavra a matriz do texto formatado.
@@ -83,6 +84,37 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 strcat(string, " ");
                 strcpy(textformat[j], ".");
                 strcat(textformat[j], " ");
+            }
+            else if(traco && strlen(string)<=86) {
+                pos = traco - token;
+                token[pos] = " ";
+                memmove(aux, token, pos);
+                strcat(textformat[j], aux);
+                strcpy(string, "\0");
+                if(strlen(textformat[j])<80){
+                    strcat(textformat[j+1], " ");
+                    strcat(textformat[j], "-");
+                    j++;
+                    memmove(aux, token+pos, strlen(token));
+                    strcat(string, aux);
+                    strcat(string, " ");
+                    strcat(textformat[j], aux);
+                    strcat(textformat[j], " ");
+                }
+                else {
+                    j++;
+                    strcat(textformat[j], "-");
+                    strcat(string, "-");
+                    memmove(aux, token+pos, strlen(token));
+                    strcat(textformat[j], "-");
+                    strcat(string, aux);
+                    strcat(string, " ");
+                    strcat(textformat[j], aux);
+                    strcat(textformat[j], " ");
+                }
+
+                memset(aux, '\0', 15);
+
             }
             else { 
                 j++;
