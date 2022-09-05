@@ -40,7 +40,7 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token, string[200], *virg, *ponto, *traco, aux[15], stringaux[200]; //Token irá separar as palavras pelo espaço.
+    char *token, string[200], *virg, *ponto, *traco, aux[15], stringaux[200], aux2[15]; //Token irá separar as palavras pelo espaço.
     int j=0, pos, i, auxtraco;
 
     strcpy(string, "\0");
@@ -64,31 +64,59 @@ void FormataTexto(char text[], char textformat[400][200]) {
         }
         else{
             if(traco && strlen(string)>80) {
-                pos = traco - token;                                      
+                pos = traco - token;
 
-                memmove(aux, token, pos);
-                strcat(stringaux, aux);
+                strncpy(aux, token, pos);
 
                 auxtraco = strlen(aux);
 
-                if(strlen(stringaux)>80) {
-                    strcat(textformat[j], aux);
+                if(strlen(stringaux)>=80) {
+                    strcat(stringaux, aux);
+
                     j++;
-                    strcat(textformat[j], "-");
 
                     strcpy(string, "\0");
-
+                    strcat(string, aux);
                     strcat(string, "-");
 
                     memmove(aux, token+pos+1, strlen(token)-auxtraco+1);
 
                     strcat(string, aux);
-                    strcat(textformat[j], aux);
-
                     strcat(string, " ");
-                    strcat(textformat[j], " ");
+
+                    strcat(textformat[j], string);
+
+                    strcpy(aux, "\0");
+                    strcpy(stringaux, "\0");
                 }
+                else{
+                    strcat(stringaux, aux);
+
+                    strcat(textformat[j], aux);
+                    strcat(textformat[j], "-");
+
+                    strcat(stringaux, "-");
+
+                    j++;
+
+                    memmove(aux2, token+pos+1, strlen(token)-auxtraco+1);
+
+                    strcat(textformat[j], aux2);
+                    strcat(textformat[j], " ");
+
+                    strcpy(string, "\0");
+
+                    strcat(string, aux2);
+                    strcat(string, " ");
+
+                    printf("%s %s\n\n", aux, aux2);
+
+                    strcpy(aux, "\0");
+                    strcpy(stringaux, "\0");
+                    strcpy(aux2, "\0");
                 
+                }
+            
             }
             else if(virg && strlen(string)<=82) {
                 pos = virg - token; //Posição da vírgula na palavra.
