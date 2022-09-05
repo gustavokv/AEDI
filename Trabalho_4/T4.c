@@ -40,54 +40,69 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token, string[200], *virg, *ponto;//Token irá separar as palavras pelo espaço.
-    int j=0, pos, i;
+    char *token = strtok(text, " "), string[200], *virg, *ponto, *abreparent, *fechaparent;
+    int j=0, i;
 
     strcpy(string, "\0");
-    token = strtok(text, " ");
    
     while(token) {
-
         strcat(string, token);
         strcat(string, " ");
 
         virg = strchr(token, ','); //Ponteiro para a vírgula em uma palavra.
         ponto = strchr(token, '.'); //Ponteiro para o ponto em uma palavra.
+        abreparent = strchr(token, '(');
+        fechaparent = strchr(token, ')');
 
         if(strlen(string)<=80) {
             strcat(textformat[j], token); //Adiciona uma palavra a matriz do texto formatado.
             strcat(textformat[j], " "); 
         }
         else{
-            if(virg && strlen(string)<=82) {
-                pos = virg - token; //Posição da vírgula na palavra.
-                token[pos] = " ";
-                strcat(textformat[j], token); //Faz com que a linha receba a palavra sem a vírgula.
+            if(virg && strlen(string)==81) { //Somente a vírgula deve pular de linha.
+                strncat(textformat[j], token, strlen(token)-1); //Faz com que a linha receba a palavra sem a vírgula.
                 j++;
                 strcpy(string, "\0");
-                strcpy(string, ",");
+                strcat(string, ",");
                 strcat(string, " ");
-                strcpy(textformat[j], ",");
+                strcat(textformat[j], ",");
                 strcat(textformat[j], " ");
                 
             }
-            else if(ponto && strlen(string)<=82) {
-                pos = ponto - token; //Posição do ponto na palavra.
-                token[pos] = " ";
-                strcat(textformat[j], token); //Faz com que a linha receba a palavra sem o ponto.
+            else if(ponto && strlen(string)==81) {//Somente o ponto deve pular de linha.
+                strncat(textformat[j], token, strlen(token)-1); //Faz com que a linha receba a palavra sem o ponto.
                 j++;
                 strcpy(string, "\0");
-                strcpy(string, ".");
+                strcat(string, ".");
                 strcat(string, " ");
-                strcpy(textformat[j], ".");
+                strcat(textformat[j], ".");
+                strcat(textformat[j], " ");
+            }
+            else if(abreparent && strlen(textformat[j])<80) {
+                strcat(textformat[j], "(");
+                j++;
+                strcpy(string, "\0");
+                strncat(string, token+1, strlen(token)-1);
+                strcat(string, " ");
+                strncat(textformat[j], token+1, strlen(token)-1);
+                strcat(textformat[j], " ");
+            }
+            else if(fechaparent && strlen(string)==81) {
+                strncat(textformat[j], token, strlen(token)-1);
+                strcat(textformat[j], " ");
+                j++;
+                strcpy(string, "\0");
+                strcat(string, ")");
+                strcat(string, " ");
+                strcat(textformat[j], ")");
                 strcat(textformat[j], " ");
             }
             else { 
                 j++;
                 strcpy(string, "\0");
-                strcpy(string, token);
+                strcat(string, token);
                 strcat(string, " ");
-                strcpy(textformat[j], token);
+                strcat(textformat[j], token);
                 strcat(textformat[j], " ");
             }
         }
@@ -141,7 +156,7 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
     if(qntrep>0) 
         printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.", palavra, qntrep);
     else
-        printf("--> A palavra [%s] nao foi encontrada!", palavra);
+        printf("\n--> A palavra [%s] nao foi encontrada!\n", palavra);
 }
 
 //Objetivo: Substituir uma palavra dentro do texto formatado.
