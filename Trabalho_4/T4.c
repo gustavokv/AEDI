@@ -213,6 +213,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
             }
 
             token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
+
             while(token) {
                 if(strcmp(token, palavramod) == 0) {
                     strcat(string, palavramodsubis); //Caso encontre a palavra desejada, será substituída pela digitada.
@@ -233,11 +234,13 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                         strcat(string, " ");
                     }
                 }
+
                 token = strtok(NULL, " ");
             }
 
             printf("\n--> Palavra [%s] substituida por [%s] com sucesso!\n", palavra, palavrasubs);
             strcpy(text[lin], string);  //Coloca novamente a linha que foi alterada na matriz.
+
             break;
         }
         else
@@ -275,8 +278,12 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
         }
     }
 
-    for(i=0;i<qntrep;i++) { //Repete até substituir todas as ocorrências.
-        SubstituiPalavra(text, palavra, palavrasubs);
+    if(qntrep==0)
+        printf("\n--> A palavra [%s] nao foi encontrada no texto!\n", palavra);
+    else {
+        for(i=0;i<qntrep;i++) { //Repete até substituir todas as ocorrências.
+            SubstituiPalavra(text, palavra, palavrasubs);
+        }
     }
 }
 
