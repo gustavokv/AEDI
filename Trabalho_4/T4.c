@@ -114,9 +114,14 @@ void FormataTexto(char text[], char textformat[400][200]) {
 //Objetivo: Cumpre a função "a)" e "h)", de mostrar o texto formatado e alinhado a esquerda.
 //Parâmetros: text é o texto já formatado.
 void ImprimeTextFormatado(char text[400][200]) {
-    int i;
+    int i=0, qnt=0;
 
-    for(i=0;i<45;i++) {    
+    while(text[i][0]!=NULL) {
+        qnt++;
+        i++;
+    } 
+
+    for(i=0;i<qnt;i++) {    
         printf("%d %s\n", strlen(text[i]), text[i]);
     }
 
@@ -135,7 +140,7 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 
     i=0;
 
-    while(i != 45) {
+    while(i != 80) {
         point = strstr(string[i], palavra); //Ponteiro que aponta para a primeira ocorrência da palavra.
 
         if(point) {
@@ -154,7 +159,7 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
     }
 
     if(qntrep>0) 
-        printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.", palavra, qntrep);
+        printf("\n--> A palavra [%s] apareceu: [%d] vez(es) no texto.\n", palavra, qntrep);
     else
         printf("\n--> A palavra [%s] nao foi encontrada!\n", palavra);
 }
@@ -163,15 +168,22 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 //Parâmetros: text é o texto formatado, palavra é a palavra que deve ser substituída e palavrasubs é a 
 //            palavra que será trocada.
 void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
-    int i=0, qnt=0, lin, j, pos, confirm=0;
+    int i=0, qnt=0, lin, j, pos, confirm=0, qntlin=0;
     char *point, *token, subscharpre[2], subscharpos[2];
-    char string[100], palavramod[30], palavramodsubis[30];
+    char string[200], palavramod[30], palavramodsubis[30], stringaux[40];
 
     strcpy(palavramod, "\0");
     strcpy(palavramodsubis, "\0");
     strcpy(string, "\0");
 
-    while(i!=40) {
+    while(text[i][0]) {
+        qntlin++;
+        i++;
+    }
+
+    i=0;
+
+    while(i!=80) {
         point = strstr(text[i], palavra); //Aponta para a palavra que deve ser trocada.
 
         if(point) {
@@ -207,20 +219,33 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                     confirm++;
                 }
                 else{
-                    strcat(string, token);
-                    strcat(string, " ");
+                    if(lin+1==qntlin) {//Caso deseje mudar alguma palavra que está junto ao link, para não bugar.
+                        strncat(string, text[i], pos);
+                        strncat(stringaux, text[i]+pos+strlen(palavra), strlen(text[i])-pos);
+                        strcat(string, palavrasubs);
+                        strcat(string, stringaux);
+
+                        strcpy(stringaux, "\0");
+
+                        confirm++;
+                    }
+                    else {
+                        strcat(string, token);
+                        strcat(string, " ");
+                    }
                 }
                 token = strtok(NULL, " ");
             }
-            strcpy(text[lin], string);  //Coloca novamente a linha que foi alterada na matriz.
+
             printf("\n--> Palavra [%s] substituida por [%s] com sucesso!\n", palavra, palavrasubs);
+            strcpy(text[lin], string);  //Coloca novamente a linha que foi alterada na matriz.
             break;
         }
         else
             i++; //Pula a linha do texto.
     }
     if(confirm == 0)
-        printf("\n--> A palavra [%s] nao foi encontrada!", palavra);
+        printf("\n--> A palavra [%s] nao foi encontrada!\n", palavra);
 }
 
 //Objetivo: Cumpre a função 'd)' de substituir todas as ocorrências de uma palavra.
@@ -230,13 +255,13 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
     int i=0, qntrep=0, pos;
     char *point, string[400][200], subs[] = {".............."};
 
-    for(i=0;i<45;i++) {
+    for(i=0;i<80;i++) {
         strcpy(string[i], text[i]); //Outro texto para não interferir no original formatado.
     }
 
     i=0;
 
-    while(i != 45) {
+    while(i != 80) {
         point = strstr(string[i], palavra); //Ponteiro que aponta para a primeira ocorrência da palavra.
 
         if(point) {
