@@ -47,7 +47,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
     token = strtok(text, " ");
    
     while(token) {
-        strcpy(stringaux, string);
+        //strcpy(stringaux, string);
 
         strcat(string, token);
         if(strlen(string)!=80) //Para não considerar o espaço no final da linha na hora de inserir a palavra no texto formatado.
@@ -63,25 +63,25 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 strcat(textformat[j], " "); 
         }
         else{
-            if(traco && strlen(string)>80) {
+            /*if(traco && strlen(string)>80) {
 
                 pos = traco - token;
 
                 strncpy(aux, token, pos);
                 printf("%s\n", aux);
-
+              
                 auxtraco = strlen(aux);
 
                 if(strlen(stringaux)>=80) {
                     strcat(stringaux, aux);
-
+                    
                     j++;
 
                     strcpy(string, "\0");
                     strcat(string, aux);
                     strcat(string, "-");
 
-                    memmove(aux, token+pos+1, strlen(token)-auxtraco+1);
+                    strncpy(aux, token+pos+1, strlen(token)-auxtraco+1);
 
                     strcat(string, aux);
                     strcat(string, " ");
@@ -91,7 +91,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
                     strcpy(aux, "\0");
                     strcpy(stringaux, "\0");
                 }
-                else{
+                else {
                     strcat(stringaux, aux);
 
                     strcat(textformat[j], aux);
@@ -101,7 +101,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
                     j++;
 
-                    memmove(aux2, token+pos+1, strlen(token)-auxtraco+1);
+                    strncpy(aux2, token+pos+1, strlen(token)-auxtraco+1);
 
                     strcat(textformat[j], aux2);
                     strcat(textformat[j], " ");
@@ -117,8 +117,8 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 
                 }
             
-            }
-            else if(virg && strlen(string)<=82) {
+            }*/
+            if(virg && strlen(string)<=82) {
                 pos = virg - token; //Posição da vírgula na palavra.
                 token[pos] = " ";
                 strcat(textformat[j], token); //Faz com que a linha receba a palavra sem a vírgula.
