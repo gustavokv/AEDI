@@ -64,9 +64,11 @@ void FormataTexto(char text[], char textformat[400][200]) {
         }
         else{
             if(traco && strlen(string)>80) {
+
                 pos = traco - token;
 
                 strncpy(aux, token, pos);
+                printf("%s\n", aux);
 
                 auxtraco = strlen(aux);
 
@@ -108,8 +110,6 @@ void FormataTexto(char text[], char textformat[400][200]) {
 
                     strcat(string, aux2);
                     strcat(string, " ");
-
-                    printf("%s %s\n\n", aux, aux2);
 
                     strcpy(aux, "\0");
                     strcpy(stringaux, "\0");
