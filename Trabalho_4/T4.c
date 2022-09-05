@@ -62,7 +62,15 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 strcat(textformat[j], " "); 
         }
         else{
-            if(virg && strlen(string)<=82) {
+            if(traco && strlen(string)>80) {
+                pos = traco - token;
+                memset(string+strlen(string)-strlen(token)-1, "\0", strlen(token));
+                strncpy(aux, token, pos);
+
+                
+                
+            }
+            else if(virg && strlen(string)<=82) {
                 pos = virg - token; //Posição da vírgula na palavra.
                 token[pos] = " ";
                 strcat(textformat[j], token); //Faz com que a linha receba a palavra sem a vírgula.
@@ -84,37 +92,6 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 strcat(string, " ");
                 strcpy(textformat[j], ".");
                 strcat(textformat[j], " ");
-            }
-            else if(traco && strlen(string)<=86) {
-                pos = traco - token;
-                token[pos] = " ";
-                memmove(aux, token, pos);
-                strcat(textformat[j], aux);
-                strcpy(string, "\0");
-                if(strlen(textformat[j])<80){
-                    strcat(textformat[j+1], " ");
-                    strcat(textformat[j], "-");
-                    j++;
-                    memmove(aux, token+pos, strlen(token));
-                    strcat(string, aux);
-                    strcat(string, " ");
-                    strcat(textformat[j], aux);
-                    strcat(textformat[j], " ");
-                }
-                else {
-                    j++;
-                    strcat(textformat[j], "-");
-                    strcat(string, "-");
-                    memmove(aux, token+pos, strlen(token));
-                    strcat(textformat[j], "-");
-                    strcat(string, aux);
-                    strcat(string, " ");
-                    strcat(textformat[j], aux);
-                    strcat(textformat[j], " ");
-                }
-
-                memset(aux, '\0', 15);
-
             }
             else { 
                 j++;
