@@ -40,13 +40,14 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
 
-    char *token, string[200], *virg, *ponto, *traco, aux[15]; //Token irá separar as palavras pelo espaço.
-    int j=0, pos, i;
+    char *token, string[200], *virg, *ponto, *traco, aux[15], stringaux[200]; //Token irá separar as palavras pelo espaço.
+    int j=0, pos, i, auxtraco;
 
     strcpy(string, "\0");
     token = strtok(text, " ");
    
     while(token) {
+        strcpy(stringaux, string);
 
         strcat(string, token);
         if(strlen(string)!=80) //Para não considerar o espaço no final da linha na hora de inserir a palavra no texto formatado.
@@ -63,11 +64,30 @@ void FormataTexto(char text[], char textformat[400][200]) {
         }
         else{
             if(traco && strlen(string)>80) {
-                pos = traco - token;
-                memset(string+strlen(string)-strlen(token)-1, "\0", strlen(token));
-                strncpy(aux, token, pos);
+                pos = traco - token;                                      
 
-                
+                memmove(aux, token, pos);
+                strcat(stringaux, aux);
+
+                auxtraco = strlen(aux);
+
+                if(strlen(stringaux)>80) {
+                    strcat(textformat[j], aux);
+                    j++;
+                    strcat(textformat[j], "-");
+
+                    strcpy(string, "\0");
+
+                    strcat(string, "-");
+
+                    memmove(aux, token+pos+1, strlen(token)-auxtraco+1);
+
+                    strcat(string, aux);
+                    strcat(textformat[j], aux);
+
+                    strcat(string, " ");
+                    strcat(textformat[j], " ");
+                }
                 
             }
             else if(virg && strlen(string)<=82) {
