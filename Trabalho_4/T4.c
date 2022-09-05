@@ -175,6 +175,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
     strcpy(palavramod, "\0");
     strcpy(palavramodsubis, "\0");
     strcpy(string, "\0");
+    strcpy(stringaux, "\0");
 
     while(text[i][0]) {
         qntlin++;
@@ -183,7 +184,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 
     i=0;
 
-    while(i!=80) {
+    while(i!=qntlin) {
         point = strstr(text[i], palavra); //Aponta para a palavra que deve ser trocada.
 
         if(point) {
@@ -225,8 +226,6 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                         strcat(string, palavrasubs);
                         strcat(string, stringaux);
 
-                        strcpy(stringaux, "\0");
-
                         confirm++;
                     }
                     else {
@@ -255,6 +254,8 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
     int i=0, qntrep=0, pos;
     char *point, string[400][200], subs[] = {".............."};
 
+    strcpy(string, "\0");
+
     for(i=0;i<80;i++) {
         strcpy(string[i], text[i]); //Outro texto para não interferir no original formatado.
     }
@@ -277,6 +278,86 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
     for(i=0;i<qntrep;i++) { //Repete até substituir todas as ocorrências.
         SubstituiPalavra(text, palavra, palavrasubs);
     }
+}
+
+//Objetivo: Cumprir a função 'e)' de formatar o texto inteiro em caixa alta.
+//Parâmetros: text é o texto a ser formatado.
+void TudoCaixaAlta(char text[400][200]) {
+    int i=0, j, qnt=0;
+    char string[200];
+
+    strcpy(string, "\0");
+
+    while(text[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+        strcpy(string, text[i]);
+        
+        for (j=0;string[j]!='\0';j++) {
+            if(string[j] >= 'a' && string[j] <= 'z') { //Encontra na tabela ASCII a letra correspondente em caixa alta.
+                string[j] = string[j]-32;
+            }
+        }
+
+        strcpy(text[i], string);
+    }
+
+    printf("\n--> Texto inteiro transformado em caixa alta com sucesso!\n");
+}
+
+//Objetivo: Cumprir a função 'f)' de formatar o texto inteiro em caixa baixa.
+//Parâmetros: text é o texto a ser formatado.
+void TudoCaixaBaixa(char text[400][200]) {
+    int i=0, j, qnt=0;
+    char string[200];
+
+    strcpy(string, "\0");
+
+    while(text[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+        strcpy(string, text[i]);
+
+        for(j=0;string[j]!='\0';j++) {
+            if(string[j] >= 'A' && string[j] <= 'Z') { //Encontra na tabela ASCII a letra correspondente em caixa baixa.
+                string[j] = string[j]+32;
+            }
+        }
+        strcpy(text[i], string);
+
+        strcpy(string, "\0");
+    }
+
+    printf("\n--> Texto inteiro transformado em caixa baixa com sucesso!\n");
+}   
+
+//Objetivo: Cumpre a função 'g)' de tranformar a primeira letra de cada frase para caixa alta.
+//Parâmetros: text é o texto a ser formatado.
+void PrimeiraLetraMaiuscula(char text[400][200]) {
+    int i=0, qnt=0;
+    char string[200];
+
+    while(text[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+        strcpy(string, text[i]);
+        
+        if(string[0] >= 'a' && string[0] <= 'z')  //Encontra na tabela ASCII a letra correspondente em caixa alta.
+            string[0] = string[0]-32;
+
+        strcpy(text[i], string);
+    }
+
+    printf("\n--> Todas as primeiras letras transformadas para caixa alta com sucesso!\n");
 }
 
 //Objetivo: Mostra o menu para editar o texto.
@@ -360,7 +441,7 @@ l) Fechar o programa.\n-->");
                 printf("Digite a palavra que deseja inserir no lugar:\n-->");
                 scanf("%s", subspalavra);
 
-                for(i=0;i<45;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
+                for(i=0;i<80;i++) { //Manda para o procedimento o textusubsformat, para não afetar o texformat.
                     strcpy(textsubsformat[i], textformat[i]);
                 }      
 
@@ -379,11 +460,34 @@ l) Fechar o programa.\n-->");
                 LimpaMatriz(textnovoformat); //Reseta também a matriz.
 
                 break;
+            case 'e':
+                system("clear");
+
+                TudoCaixaAlta(textformat);
+
+                break;
+            case 'f':
+                system("clear");
+
+                TudoCaixaBaixa(textformat);
+
+                break;
+            case 'g':
+                system("clear");
+
+                PrimeiraLetraMaiuscula(textformat);
+
+                break;
             case 'h':
                 system("clear");
 
                 ImprimeTextFormatado(textformat);
 
+                break;
+            case 'j':
+                system("clear");
+
+                
                 break;
             case 'l':
                 printf("\n[Programa encerrado!]\n");
