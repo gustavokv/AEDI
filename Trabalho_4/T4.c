@@ -83,13 +83,11 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 j++;
                 strcpy(string, "\0");
                 strncat(string, token+1, strlen(token)-1);
-                strcat(string, " ");
                 strncat(textformat[j], token+1, strlen(token)-1);
                 strcat(textformat[j], " ");
             }
             else if(fechaparent && strlen(string)==81) {
                 strncat(textformat[j], token, strlen(token)-1);
-                strcat(textformat[j], " ");
                 j++;
                 strcpy(string, "\0");
                 strcat(string, ")");
@@ -194,8 +192,8 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
 
             if(!isalpha(text[i][pos-1]) && !isblank(text[i][pos-1])) { //Caso haja algum caracter especial uma letra antes
                 subscharpre[0] = text[i][pos-1];                       //da palavra
-
-                palavramod[0] = subscharpre[0];
+                strncpy(palavramod, subscharpre, 1);
+                palavramod[1] = '\0';
                 strcpy(palavramodsubis, subscharpre);
 
                 strcat(palavramod, palavra);
@@ -211,7 +209,7 @@ void SubstituiPalavra(char text[400][200], char palavra[], char palavrasubs[]) {
                 strcat(palavramod, subscharpos);
                 strcat(palavramodsubis, subscharpos);
             }
-
+            
             token = strtok(text[i], " "); //Ponteiro para as palavras da linha onde está a palavra.
 
             while(token) {
