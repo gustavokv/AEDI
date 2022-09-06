@@ -69,7 +69,7 @@ void FormataTexto(char text[], char textformat[400][200]) {
                 strcat(textformat[j], " ");
                 
             }
-            else if(ponto && strlen(string)==81) {//Somente o ponto deve pular de linha.
+            else if(ponto && strlen(string)==82) {//Somente o ponto deve pular de linha.
                 strncat(textformat[j], token, strlen(token)-1); //Faz com que a linha receba a palavra sem o ponto.
                 j++;
                 strcpy(string, "\0");
