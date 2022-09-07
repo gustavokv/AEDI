@@ -36,6 +36,13 @@ void MatrizParaVetor(char matriz[400][200], char array[3200]) {
     }
 }
 
+void MatrizParaVetorSEspaco(char matriz[400][200], char array[3200]) {
+    int i;
+
+    for(i=0;i<400;i++) {
+        strcat(array, matriz[i]);
+    }
+}
 //Objetivo: Formatar o texto original.
 //Parâmetros: text: O texto original, textformat: O texto formatado. 
 void FormataTexto(char text[], char textformat[400][200]) {
@@ -44,6 +51,10 @@ void FormataTexto(char text[], char textformat[400][200]) {
     int j=0, i;
 
     strcpy(string, "\0");
+
+    for(i=0;i<80;i++) {
+        memmove(textformat[i], "\0", strlen(textformat[i]));
+    }
    
     while(token) {
         strcat(string, token);
@@ -365,6 +376,116 @@ void PrimeiraLetraMaiuscula(char text[400][200]) {
     printf("\n--> Todas as primeiras letras transformadas para caixa alta com sucesso!\n");
 }
 
+//Objetivo: Cumpre a função 'i)' de alinhar o texto a direita.
+//Parâmetros: texto é o texto a ser alinhado.
+void AlinhaDireita(char texto[400][200]) {
+    char text[400][200], stringespa[81];
+    int i=0, qnt=0, qntespa, j=0;
+
+    while(texto[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+
+        qntespa = 80 - strlen(texto[i]);
+
+        while(j<qntespa) {
+            strcat(stringespa, " ");
+            j++;
+        }
+
+        sprintf(text[i], "  %s%s", stringespa, texto[i]);
+
+        memmove(stringespa, "\0", 81);
+
+        j=0;
+
+        strcpy(texto[i], text[i]);
+    }
+}
+
+//Objetivo: Cumprir a função 'j)' de justificar o texto.
+//Parâmetros: texto é o texto a ser justiticado.
+void JustificaTexto(char texto[400][200]) {
+    char *token, textosubs[400][200];
+    int i=0, qnt=0, pos;
+
+    while(texto[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+        strcpy(textosubs[i], "\0");
+    }
+
+    for(i=0;i<qnt;i++) {
+        token = strtok(texto[i], " ");
+
+        while(token) {
+
+            strcat(textosubs[i], token);
+            strcat(textosubs[i], " ");
+
+            
+            token = strtok(NULL, " ");
+        }
+
+        printf("%s\n", textosubs[i]);
+    
+    }
+}
+
+//Objetivo: Cumprir a função 'k)' de centralizar o texto.
+//Parâmetros: texto é o texto para ser centralizado.
+void CentralizaTexto(char texto[400][200]) {
+    int i=0, qntesquer=0, qntdiret=0, qnt=0, qntotal, j=0;
+    char espaesqu[40], espadire[40], text[400][200];
+
+    while(texto[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    strcpy(espaesqu, "\0");
+    strcpy(espadire, "\0");
+
+    for(i=0;i<qnt;i++) {
+        qntotal = 80 - strlen(texto[i]);
+
+        if(qntotal % 2 == 0) {
+            qntesquer = qntotal / 2;
+            qntdiret = qntotal / 2;
+        }
+        else {
+            qntotal--;
+
+            qntesquer = qntotal / 2 + 1;
+            qntdiret = qntotal / 2;
+        }
+
+        while(j<qntesquer) {
+            strcat(espaesqu, " ");
+            j++;
+        }
+        j=0;
+        while(j<qntdiret) {
+            strcat(espadire, " ");
+            j++;
+        }
+        j=0;
+
+        sprintf(text[i], "%s%s%s", espaesqu, texto[i], espadire);
+
+        strcpy(texto[i], text[i]);
+
+        strcpy(espaesqu, "\0");
+        strcpy(espadire, "\0");
+    }
+}
+
 //Objetivo: Mostra o menu para editar o texto.
 //Parâmetros: text é o texto sem estar formatado.
 void ExecutaMenu(char text[]) {
@@ -372,7 +493,7 @@ void ExecutaMenu(char text[]) {
     char textformat[400][200], textnovoformat[400][200], textsubsformat[400][200];
     char palavra[30], palavrasubs[30], subspalavra[30], arraytextsubs[3200];
     char choose;
-    int i;
+    int i, alinhadireita=0, centralizado=0;
 
     FormataTexto(text, textformat);
 
@@ -396,6 +517,11 @@ l) Fechar o programa.\n-->");
         switch(choose) {
             case 'a':
                 system("clear");
+
+                if(alinhadireita==1) 
+                    AlinhaDireita(textformat);
+                if(centralizado==1)
+                    CentralizaTexto(textformat);
 
                 ImprimeTextFormatado(textformat);
 
@@ -427,14 +553,13 @@ l) Fechar o programa.\n-->");
                 MatrizParaVetor(textsubsformat, arraytextsubs); 
 
                 FormataTexto(arraytextsubs, textnovoformat);
-                
-                strcpy(arraytextsubs, "\0"); //Reseta o array para não estar sujo quando executar novamente.
 
                 for(i=0;i<45;i++) {
                     strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
                 }
 
-                LimpaMatriz(textnovoformat); //Reseta também a matriz.
+                LimpaMatriz(textnovoformat);
+                memmove(arraytextsubs, "\0", strlen(arraytextsubs));
 
                 break;
             case 'd':
@@ -455,14 +580,13 @@ l) Fechar o programa.\n-->");
                 MatrizParaVetor(textsubsformat, arraytextsubs); 
 
                 FormataTexto(arraytextsubs, textnovoformat);
-                
-                strcpy(arraytextsubs, "\0"); //Reseta o array para não estar sujo quando executar novamente.
 
-                for(i=0;i<45;i++) {
+                for(i=0;i<80;i++) {
                     strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
                 }
 
-                LimpaMatriz(textnovoformat); //Reseta também a matriz.
+                memmove(arraytextsubs, "\0", strlen(arraytextsubs));
+                LimpaMatriz(textnovoformat);
 
                 break;
             case 'e':
@@ -486,13 +610,49 @@ l) Fechar o programa.\n-->");
             case 'h':
                 system("clear");
 
-                ImprimeTextFormatado(textformat);
+                for(i=0;i<80;i++) {
+                    strcpy(textnovoformat[i], textformat[i]);
+                }
+
+                MatrizParaVetorSEspaco(textnovoformat, arraytextsubs);
+                
+                FormataTexto(arraytextsubs, textnovoformat);
+
+                for(i=0;i<80;i++) {
+                    strcpy(textformat[i], textnovoformat[i]);
+                }
+
+                memmove(arraytextsubs, "\0", strlen(arraytextsubs));
+                LimpaMatriz(textnovoformat);
+
+                alinhadireita=0;
+
+                printf("\n--> Texto alinhado a esquerda com sucesso!\n\n");
+                break; 
+            case 'i':
+                system("clear");
+
+                AlinhaDireita(textformat);
+                
+                alinhadireita=1; //Para a função 'a' mostrar corretamente o texto.
+
+                printf("\n--> Texto alinhado a direita com sucesso!\n\n");
 
                 break;
             case 'j':
                 system("clear");
 
-                
+                JustificaTexto(textformat);
+
+                break;
+            case 'k':
+                system("clear");
+
+                CentralizaTexto(textformat);
+
+                centralizado=1; //Para a função 'a)' mostrar corretamente o texto.
+
+                printf("\n--> Texto centralizado com sucesso!\n\n");
                 break;
             case 'l':
                 printf("\n[Programa encerrado!]\n");
@@ -527,7 +687,7 @@ int main()
  a Traf-o-Data, porem os clientes desistiram do negocio quando descobriram a idade dos donos. Enquanto \
  estudavam em Harvard, os jovens desenvolveram um interpretador da linguagem BASIC para um dos primeiros \
  computadores pessoais a serem lancado nos Estados Unidos - o Altair 8800. Apos um modesto sucesso na \
- comercializa��o deste produto, Gates e Allen fundaram a Microsoft, uma das primeiras empresas no mundo \
+ comercializacao deste produto, Gates e Allen fundaram a Microsoft, uma das primeiras empresas no mundo \
  focadas exclusivamente no mercado de programas para computadores pessoais ou PCs. Gates adquiriu ao \
  longo dos anos uma fama de visionario (apostou no mercado de software na epoca em que o hardware era \
  considerado muito mais valioso) e de negociador agressivo, chegando muitas vezes a ser acusado por \
