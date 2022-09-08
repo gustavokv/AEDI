@@ -392,7 +392,7 @@ void AlinhaDireita(char textbase[400][200], char texto[400][200]) {
             j++;
         }
 
-        sprintf(text[i], "  %s%s", stringespa, textbase[i]);
+        sprintf(text[i], "%s%s", stringespa, textbase[i]);
 
         memmove(stringespa, "\0", 81);
 
