@@ -409,33 +409,7 @@ void AlinhaDireita(char texto[400][200]) {
 //Objetivo: Cumprir a função 'j)' de justificar o texto.
 //Parâmetros: texto é o texto a ser justiticado.
 void JustificaTexto(char texto[400][200]) {
-    char *token, textosubs[400][200];
-    int i=0, qnt=0, pos;
-
-    while(texto[i][0]) {
-        qnt++;
-        i++;
-    }
-
-    for(i=0;i<qnt;i++) {
-        strcpy(textosubs[i], "\0");
-    }
-
-    for(i=0;i<qnt;i++) {
-        token = strtok(texto[i], " ");
-
-        while(token) {
-
-            strcat(textosubs[i], token);
-            strcat(textosubs[i], " ");
-
-            
-            token = strtok(NULL, " ");
-        }
-
-        printf("%s\n", textosubs[i]);
     
-    }
 }
 
 //Objetivo: Cumprir a função 'k)' de centralizar o texto.
@@ -490,12 +464,16 @@ void CentralizaTexto(char texto[400][200]) {
 //Parâmetros: text é o texto sem estar formatado.
 void ExecutaMenu(char text[]) {
 
-    char textformat[400][200], textnovoformat[400][200], textsubsformat[400][200];
+    char textformat[400][200], textnovoformat[400][200], textsubsformat[400][200], textbase[400][200];
     char palavra[30], palavrasubs[30], subspalavra[30], arraytextsubs[3200];
     char choose;
     int i, alinhadireita=0, centralizado=0;
 
     FormataTexto(text, textformat);
+    
+    for(i=0;i<80;i++) {
+        strcpy(textbase[i], textformat[i]);
+    }
 
     do {
         printf("\n----------------\nEditor de Textos\n----------------\n\nOpções:\n\n");
@@ -517,11 +495,6 @@ l) Fechar o programa.\n-->");
         switch(choose) {
             case 'a':
                 system("clear");
-
-                if(alinhadireita==1) 
-                    AlinhaDireita(textformat);
-                if(centralizado==1)
-                    CentralizaTexto(textformat);
 
                 ImprimeTextFormatado(textformat);
 
