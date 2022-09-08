@@ -352,8 +352,9 @@ void TudoCaixaBaixa(char textbase[400][200], char text[400][200]) {
 //Objetivo: Cumpre a função 'g)' de tranformar a primeira letra de cada frase para caixa alta.
 //Parâmetros: text é o texto a ser formatado.
 void PrimeiraLetraMaiuscula(char text[400][200]) {
-    int i=0, qnt=0;
-    char string[200];
+    int i=0, qnt=0, pos;
+    char string[200], *token, caixa;
+    char textsubs[400][200];
 
     while(text[i][0]) {
         qnt++;
@@ -361,12 +362,34 @@ void PrimeiraLetraMaiuscula(char text[400][200]) {
     }
 
     for(i=0;i<qnt;i++) {
-        strcpy(string, text[i]);
-        
-        if(string[0] >= 'a' && string[0] <= 'z')  //Encontra na tabela ASCII a letra correspondente em caixa alta.
-            string[0] = string[0]-32;
+        strcpy(textsubs[i], "\0");
+    }
 
-        strcpy(text[i], string);
+    for(i=0;i<qnt;i++) {
+        strcpy(textsubs[i], text[i]);
+    }
+
+    for(i=0;i<qnt;i++) {
+        token = strtok(textsubs[i], " ");
+        
+        while(token) {
+            if(strstr(token, ".")) {
+                token = strtok(NULL, " ");
+
+                pos = token - textsubs[i];
+
+                caixa = textsubs[i][pos];
+
+                text[i][pos] = toupper(caixa);
+
+                printf("%c\n%s\n\n", caixa, text[i]);
+                
+            }
+            else {
+                token = strtok(NULL, " ");
+            }
+        }
+        
     }
 
     printf("\n--> Todas as primeiras letras transformadas para caixa alta com sucesso!\n");
