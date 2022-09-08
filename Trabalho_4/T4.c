@@ -389,7 +389,6 @@ void PrimeiraLetraMaiuscula(char text[400][200]) {
                 token = strtok(NULL, " ");
             }
         }
-        
     }
 
     printf("\n--> Todas as primeiras letras transformadas para caixa alta com sucesso!\n");
