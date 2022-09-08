@@ -298,19 +298,19 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
 
 //Objetivo: Cumprir a função 'e)' de formatar o texto inteiro em caixa alta.
 //Parâmetros: text é o texto a ser formatado.
-void TudoCaixaAlta(char text[400][200]) {
+void TudoCaixaAlta(char textbase[400][200], char text[400][200]) {
     int i=0, j, qnt=0;
     char string[200];
 
     strcpy(string, "\0");
 
-    while(text[i][0]) {
+    while(textbase[i][0]) {
         qnt++;
         i++;
     }
 
     for(i=0;i<qnt;i++) {
-        strcpy(string, text[i]);
+        strcpy(string, textbase[i]);
         
         for (j=0;string[j]!='\0';j++) {
             if(string[j] >= 'a' && string[j] <= 'z') { //Encontra na tabela ASCII a letra correspondente em caixa alta.
@@ -320,25 +320,23 @@ void TudoCaixaAlta(char text[400][200]) {
 
         strcpy(text[i], string);
     }
-
-    printf("\n--> Texto inteiro transformado em caixa alta com sucesso!\n");
 }
 
 //Objetivo: Cumprir a função 'f)' de formatar o texto inteiro em caixa baixa.
 //Parâmetros: text é o texto a ser formatado.
-void TudoCaixaBaixa(char text[400][200]) {
+void TudoCaixaBaixa(char textbase[400][200], char text[400][200]) {
     int i=0, j, qnt=0;
     char string[200];
 
     strcpy(string, "\0");
 
-    while(text[i][0]) {
+    while(textbase[i][0]) {
         qnt++;
         i++;
     }
 
     for(i=0;i<qnt;i++) {
-        strcpy(string, text[i]);
+        strcpy(string, textbase[i]);
 
         for(j=0;string[j]!='\0';j++) {
             if(string[j] >= 'A' && string[j] <= 'Z') { //Encontra na tabela ASCII a letra correspondente em caixa baixa.
@@ -349,8 +347,6 @@ void TudoCaixaBaixa(char text[400][200]) {
 
         strcpy(string, "\0");
     }
-
-    printf("\n--> Texto inteiro transformado em caixa baixa com sucesso!\n");
 }   
 
 //Objetivo: Cumpre a função 'g)' de tranformar a primeira letra de cada frase para caixa alta.
@@ -378,25 +374,25 @@ void PrimeiraLetraMaiuscula(char text[400][200]) {
 
 //Objetivo: Cumpre a função 'i)' de alinhar o texto a direita.
 //Parâmetros: texto é o texto a ser alinhado.
-void AlinhaDireita(char texto[400][200]) {
+void AlinhaDireita(char textbase[400][200], char texto[400][200]) {
     char text[400][200], stringespa[81];
     int i=0, qnt=0, qntespa, j=0;
 
-    while(texto[i][0]) {
+    while(textbase[i][0]) {
         qnt++;
         i++;
     }
 
     for(i=0;i<qnt;i++) {
 
-        qntespa = 80 - strlen(texto[i]);
+        qntespa = 80 - strlen(textbase[i]);
 
         while(j<qntespa) {
             strcat(stringespa, " ");
             j++;
         }
 
-        sprintf(text[i], "  %s%s", stringespa, texto[i]);
+        sprintf(text[i], "  %s%s", stringespa, textbase[i]);
 
         memmove(stringespa, "\0", 81);
 
@@ -408,17 +404,17 @@ void AlinhaDireita(char texto[400][200]) {
 
 //Objetivo: Cumprir a função 'j)' de justificar o texto.
 //Parâmetros: texto é o texto a ser justiticado.
-void JustificaTexto(char texto[400][200]) {
+void JustificaTexto(char textbase[400][200], char texto[400][200]) {
     
 }
 
 //Objetivo: Cumprir a função 'k)' de centralizar o texto.
 //Parâmetros: texto é o texto para ser centralizado.
-void CentralizaTexto(char texto[400][200]) {
+void CentralizaTexto(char textbase[400][200], char texto[400][200]) {
     int i=0, qntesquer=0, qntdiret=0, qnt=0, qntotal, j=0;
     char espaesqu[40], espadire[40], text[400][200];
 
-    while(texto[i][0]) {
+    while(textbase[i][0]) {
         qnt++;
         i++;
     }
@@ -427,7 +423,7 @@ void CentralizaTexto(char texto[400][200]) {
     strcpy(espadire, "\0");
 
     for(i=0;i<qnt;i++) {
-        qntotal = 80 - strlen(texto[i]);
+        qntotal = 80 - strlen(textbase[i]);
 
         if(qntotal % 2 == 0) {
             qntesquer = qntotal / 2;
@@ -451,7 +447,7 @@ void CentralizaTexto(char texto[400][200]) {
         }
         j=0;
 
-        sprintf(text[i], "%s%s%s", espaesqu, texto[i], espadire);
+        sprintf(text[i], "%s%s%s", espaesqu, textbase[i], espadire);
 
         strcpy(texto[i], text[i]);
 
@@ -467,7 +463,7 @@ void ExecutaMenu(char text[]) {
     char textformat[400][200], textnovoformat[400][200], textsubsformat[400][200], textbase[400][200];
     char palavra[30], palavrasubs[30], subspalavra[30], arraytextsubs[3200];
     char choose;
-    int i, alinhadireita=0, centralizado=0;
+    int i, alinhadodireita=0, centralizado=0, justificado=0, alinhadoesquerda=0;
 
     FormataTexto(text, textformat);
     
@@ -522,14 +518,22 @@ l) Fechar o programa.\n-->");
                 }       
 
                 SubstituiPalavra(textsubsformat, palavrasubs, subspalavra);
-                
-                MatrizParaVetor(textsubsformat, arraytextsubs); 
 
+                MatrizParaVetor(textsubsformat, arraytextsubs); 
                 FormataTexto(arraytextsubs, textnovoformat);
 
-                for(i=0;i<45;i++) {
+
+                for(i=0;i<80;i++) {
                     strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
+                    strcpy(textbase[i], textnovoformat[i]);
                 }
+
+                if(centralizado==1)
+                    CentralizaTexto(textbase, textformat);
+                if(alinhadodireita==1)
+                    AlinhaDireita(textbase, textformat);
+                if(justificado==1)
+                    JustificaTexto(textbase, textformat);
 
                 LimpaMatriz(textnovoformat);
                 memmove(arraytextsubs, "\0", strlen(arraytextsubs));
@@ -556,7 +560,15 @@ l) Fechar o programa.\n-->");
 
                 for(i=0;i<80;i++) {
                     strcpy(textformat[i], textnovoformat[i]); //Passando o texto alterado para o original.
+                    strcpy(textbase[i], textnovoformat[i]);
                 }
+
+                if(centralizado==1)
+                    CentralizaTexto(textbase, textformat);
+                if(alinhadodireita==1)
+                    AlinhaDireita(textbase, textformat);
+                if(justificado==1)
+                    JustificaTexto(textbase, textformat);
 
                 memmove(arraytextsubs, "\0", strlen(arraytextsubs));
                 LimpaMatriz(textnovoformat);
@@ -565,13 +577,17 @@ l) Fechar o programa.\n-->");
             case 'e':
                 system("clear");
 
-                TudoCaixaAlta(textformat);
+                TudoCaixaAlta(textbase, textformat);
+
+                printf("\n--> Texto inteiro transformado em caixa alta com sucesso!\n");
 
                 break;
             case 'f':
                 system("clear");
 
-                TudoCaixaBaixa(textformat);
+                TudoCaixaBaixa(textbase, textformat);
+
+                printf("\n--> Texto inteiro transformado em caixa baixa com sucesso!\n");
 
                 break;
             case 'g':
@@ -595,19 +611,24 @@ l) Fechar o programa.\n-->");
                     strcpy(textformat[i], textnovoformat[i]);
                 }
 
+                alinhadodireita=0;
+                centralizado=0;
+                justificado=0;
+                alinhadoesquerda=1;
+
                 memmove(arraytextsubs, "\0", strlen(arraytextsubs));
                 LimpaMatriz(textnovoformat);
-
-                alinhadireita=0;
 
                 printf("\n--> Texto alinhado a esquerda com sucesso!\n\n");
                 break; 
             case 'i':
                 system("clear");
 
-                AlinhaDireita(textformat);
-                
-                alinhadireita=1; //Para a função 'a' mostrar corretamente o texto.
+                AlinhaDireita(textbase, textformat);
+
+                alinhadodireita=1;
+                centralizado=0;
+                justificado=0;
 
                 printf("\n--> Texto alinhado a direita com sucesso!\n\n");
 
@@ -615,15 +636,21 @@ l) Fechar o programa.\n-->");
             case 'j':
                 system("clear");
 
-                JustificaTexto(textformat);
+                alinhadodireita=0;
+                centralizado=0;
+                justificado=1;
+
+                JustificaTexto(textbase, textformat);
 
                 break;
             case 'k':
                 system("clear");
 
-                CentralizaTexto(textformat);
+                alinhadodireita=0;
+                centralizado=1;
+                justificado=0;
 
-                centralizado=1; //Para a função 'a)' mostrar corretamente o texto.
+                CentralizaTexto(textbase, textformat);
 
                 printf("\n--> Texto centralizado com sucesso!\n\n");
                 break;
