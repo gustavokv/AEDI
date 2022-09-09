@@ -454,15 +454,7 @@ void JustificaTexto(char textbase[400][200], char texto[400][200]) {
 
         while(token){
             
-            strcat(string, token);
-            strcat(string, " ");
-
-            if(strlen(stringbase[i]) != 80) {
-                strcat(string, " ");
-                strcat(stringbase[i], " ");
-            }
-            else
-                break;
+            
 
             token = strtok(NULL, " ");
         }
