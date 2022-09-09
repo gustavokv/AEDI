@@ -131,7 +131,7 @@ void ImprimeTextFormatado(char text[400][200]) {
     } 
 
     for(i=0;i<qnt;i++) {    
-        printf("%d %s\n", strlen(text[i]), text[i]);
+        printf("%s\n", text[i]);
     }
 
 }
@@ -435,8 +435,45 @@ void AlinhaDireita(char textbase[400][200], char texto[400][200]) {
 //Objetivo: Cumprir a função 'j)' de justificar o texto.
 //Parâmetros: texto é o texto a ser justiticado.
 void JustificaTexto(char textbase[400][200], char texto[400][200]) {
-    
-}
+    int i, qnt, pos;
+    char *token, string[100], stringbase[400][200];
+
+    strcpy(string, "\0");
+
+    while(textbase[i][0]) {
+        qnt++;
+        i++;
+    }
+
+    for(i=0;i<qnt;i++) {
+        strcpy(stringbase[i], textbase[i]);
+    }
+
+    for(i=0;i<qnt;i++){
+        token = strtok(textbase[i], " "); 
+
+        while(token){
+            
+            strcat(string, token);
+            strcat(string, " ");
+
+            if(strlen(stringbase[i]) != 80) {
+                strcat(string, " ");
+                strcat(stringbase[i], " ");
+            }
+            else
+                break;
+
+            token = strtok(NULL, " ");
+        }
+
+        printf("%d %s\n", strlen(string), string);
+
+        strcpy(texto[i], string);
+
+        strcpy(string, "\0");
+    }
+}   
 
 //Objetivo: Cumprir a função 'k)' de centralizar o texto.
 //Parâmetros: texto é o texto para ser centralizado.
