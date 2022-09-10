@@ -131,7 +131,7 @@ void ImprimeTextFormatado(char text[400][200]) {
     } 
 
     for(i=0;i<qnt;i++) {    
-        printf("%d %s\n", strlen(text[i]), text[i]);
+        printf("%s\n", text[i]);
     }
 
 }
