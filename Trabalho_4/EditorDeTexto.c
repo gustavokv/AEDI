@@ -291,6 +291,8 @@ void SubstituiVariasPalavras(char text[400][200], char palavra[], char palavrasu
         }
     }
 
+    system("cls");
+    
     if(qntrep==0){
         printf("\n--> A palavra [%s] nao foi encontrada no texto!\n\n", palavra);
     }
