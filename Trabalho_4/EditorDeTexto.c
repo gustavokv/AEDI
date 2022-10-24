@@ -154,13 +154,17 @@ void MostraPalavra(char textbase[400][200], char palavra[]) {
 
         if(point) {
             pos = point - string[i]; //Posição da palavra.
-            memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
-            qntrep++;
-            printf("\n--> Linha: %d Coluna: %d;", i, pos);
+            
+            if((!isalpha(string[i][pos-1]) || pos-1==-1) && !isalpha(string[i][pos+strlen(palavra)])) {
+                memmove(string[i]+pos, subs, strlen(palavra)); //Muda a substring que é igual a palavra desejada.
+                qntrep++;
+                printf("\n--> Linha: %d Coluna: %d;", i+1, pos+1);
+            }
+            else
+               memmove(string[i]+pos, subs, strlen(palavra)); 
         }
-        else {
+        else 
             i++;
-        }
     }
 
     for(i=0;i<40;i++) {
@@ -426,7 +430,7 @@ void AlinhaDireita(char textbase[400][200], char texto[400][200]) {
     strcpy(stringespa, "\0");
 
     for(i=0;i<qnt;i++) {
-
+        
         qntespa = 80 - strlen(textbase[i]);
 
         while(j<qntespa) {
@@ -435,6 +439,9 @@ void AlinhaDireita(char textbase[400][200], char texto[400][200]) {
         }
 
         sprintf(text[i], "%s%s", stringespa, textbase[i]);
+
+        if(text[i][79]==' ')
+            sprintf(text[i], "%c%s%s", ' ', stringespa, textbase[i]);
 
         memmove(stringespa, "\0", 81);
 
@@ -475,7 +482,15 @@ void JustificaTexto(char textbase[400][200], char texto[400][200]) {
             pos = token - textbase2[i];
 
             if(strlen(stringbase[i])==80) {
-                strcpy(stringjustif[i], stringbase[i]);
+                if(textbase2[i][79] == ' '){
+                    strcpy(stringjustif[i], token);
+                    strcat(stringjustif[i], "  ");
+                    memmove(string, stringbase[i]+pos+strlen(token)+1, strlen(stringbase[i]));
+                    strcat(stringjustif[i], string);
+                }
+                else 
+                    strcpy(stringjustif[i], stringbase[i]);
+
                 break;
             }
 
@@ -483,15 +498,19 @@ void JustificaTexto(char textbase[400][200], char texto[400][200]) {
             strcat(stringjustif[i], " ");
 
             memmove(string, stringbase[i]+pos+strlen(token)+1, strlen(stringbase[i]));
-        
+
             strcat(stringjustif[i], " ");
             
-            if(strlen(stringjustif[i])+strlen(string) == 80) {
+            if(strlen(stringjustif[i])+strlen(string)==80) {
                 token = strtok(NULL, " ");
-
+                
+                if(string[strlen(string)-1] == ' ')
+                    strcat(stringjustif[i], " ");
+                                
                 if(token) {
                     while(token) {
                         strcat(stringjustif[i], token);
+                        
                         if(strlen(stringjustif[i])==80)
                             break;
                         else
