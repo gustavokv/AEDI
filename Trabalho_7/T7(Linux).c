@@ -102,7 +102,7 @@ void PrintaCliente(struct CLIENTE cli) {
     printf("--> Bairro: %s\n--> Cidade: %s\n--> Estado: %s\n", cli.endereco.bairro, cli.endereco.cidade, cli.endereco.estado);
     printf("--> CEP: %s\nTelefone Residencial: %s\n", cli.endereco.cep, cli.residencial.telefone);
     printf("Telefone(s) Celular(es):\n");
-    while(isdigit(cli.celular[i].telefone[0]) > 0) {
+    while(isdigit(cli.celular[i].telefone[0]) > 0 && isdigit(cli.celular[i].telefone[1]) > 0) {
         printf("--> %s\n", cli.celular[i].telefone);
         i++;
     }
