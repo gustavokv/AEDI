@@ -7,10 +7,10 @@ int main () {
     int i;
 
     //Entrada do andar.
-    printf("\nDigite o andar que deseja modificar:\n");
+    printf("-> Digite o andar que deseja modificar:\n");
     scanf("%d", &andar);
-    while((andar<1)||(andar>pow(10, 6))) {
-        printf("O andar esta num valor incorreto, deve ser de 1 ate 10^6.\nDigite novamente:\n");
+    while(andar<1||andar>pow(10, 6)) {
+        printf("\n-> O andar esta num valor incorreto, deve ser de 1 ate 10^6.\nDigite novamente:\n");
         scanf("%d", &andar);
     }
 
@@ -29,15 +29,13 @@ int main () {
         mi = (i % 10000000 - i % 1000000) / 1000000;
 
         //Caso i possua 4 ou 13, sera somado +1 no valor total.
-        if((un==4)||(dez==4)||(cent==4)||(m1==4)||(m2==4)||(m3==4)||((dez==1)&&(un==3))||((cent==1)&&(dez==3))||((m1==1)&&(cent==3))||((m2==1)&&(m1==3))||((m3==1)&&(m2==3))||((mi==1)&&(m3==3))) {
+        if(un==4||dez==4||cent==4||m1==4||m2==4||m3==4||(dez==1&&un==3)||(cent==1&&dez==3)||(m1==1&&cent==3)||(m2==1&&m1==3)||(m3==1&&m2==3)||(mi==1&&m3==3)) {
             novoandar++;
             quantsoma++;
         }
     }
 
-    printf("\n------------------------------------------------------------\n");
-    printf("O andar %d recebeu %d somas, se tranformando no andar %d!", andar, quantsoma, novoandar);
-    printf("\n------------------------------------------------------------\n");
+    printf("\n-> O andar %d recebeu %d somas, se tranformando no andar %d!\n", andar, quantsoma, novoandar);
 
     return 0;
 }

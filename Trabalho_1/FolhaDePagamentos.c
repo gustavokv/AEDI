@@ -10,20 +10,20 @@ int main () {
     printf("-------------------\n");
     printf("Folha de Pagamentos\n");
     printf("-------------------\n");
-    printf("Digite o numero de funcionarios: ");
+    printf("\n-> Digite o numero de funcionarios: ");
     scanf("%d", &numfunc);
     while((numfunc<1)||(numfunc>pow(10, 4))) {
-        printf("Numero de funcionarios invalido! Deve estar entre 1 e 10000.\nDigite novamente: ");
+        printf("\n-> Numero de funcionarios invalido! Deve estar entre 1 e 10000.\nDigite novamente: ");
         scanf("%d", &numfunc);
     }
 
     //Calculo do salario com base na matricula
     for(i=1;i<=numfunc;i++) {
         //Leitura da matricula dos funcionarios
-        printf("\nDigite a matricula do funcionario %d: ", i);
+        printf("\n-> Digite a matricula do funcionario %d: ", i);
         scanf("%d", &matricula);
         while((matricula<1)||(matricula>30000)) {
-            printf("Numero da matricula incorreto! Deve estar entre 1 e 30000.\nDigite novamente: ");
+            printf("\n-> Numero da matricula incorreto! Deve estar entre 1 e 30000.\nDigite novamente: ");
             scanf("%d", &matricula);
         }
         
