@@ -1,3 +1,3 @@
 # Trabalhos-AEDI
 
-Os seguintes códigos fontes são referentes ao 1 e 2 semestre de Algoritmo e Estrutura de Dados I, todos feitos em C. 
+The following codes are from Algorithms and Data Structures I from my undergraduate.
